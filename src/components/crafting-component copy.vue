@@ -322,8 +322,7 @@ const removeRow = (index) => {
             <tbody>
               <tr>
                 <th scope="row">Goldsmith</th>
-                <td><input type="text" v-model.number="goldName" id="goldName" name="goldName" class="form-control">
-                </td>
+                <td><input type="text" v-model.number="goldName" id="goldName" name="goldName" class="form-control"></td>
                 <td><input type="text" v-model.number="goldHrs" id="goldHrs" name="goldHrs" class="form-control"></td>
                 <td><input type="text" v-model.number="goldRate" @input="computeGoldSmith()" id="goldRate"
                     name="goldRate" class="form-control"></td>
@@ -333,29 +332,21 @@ const removeRow = (index) => {
               </tr>
               <tr>
                 <th scope="row">Stone Setter</th>
-                <td><input type="text" v-model.number="stoneName" id="stoneName" name="stoneName" class="form-control">
-                </td>
-                <td><input type="text" v-model.number="stoneHrs" id="stoneHrs" name="stoneHrs" class="form-control">
-                </td>
-                <td><input type="text" v-model.number="stoneRate" id="stoneRate" @input="computeStoneSmith()"
-                    name="stoneRate" class="form-control"></td>
+                <td><input type="text" v-model.number="stoneName" id="stoneName" name="stoneName" class="form-control"></td>
+                <td><input type="text" v-model.number="stoneHrs" id="stoneHrs" name="stoneHrs" class="form-control"></td>
+                <td><input type="text" v-model.number="stoneRate" id="stoneRate" @input="computeStoneSmith()" name="stoneRate" class="form-control"></td>
                 <td><input type="text" v-model="stoneCost" id="stoneCost" name="stoneCost" class="form-control"></td>
                 <td><input type="text" v-model.number="stoneMu" id="stoneMu" name="stoneMu" class="form-control"></td>
                 <td><input type="text" v-model.number="stoneSp" id="stoneSp" name="stoneSp" class="form-control"></td>
               </tr>
               <tr>
                 <th scope="row">Polisher</th>
-                <td><input type="text" v-model.number="polishName" id="polishName" name="polishName"
-                    class="form-control"></td>
-                <td><input type="text" v-model.number="polishHrs" id="polishHrs" name="polishHrs" class="form-control">
-                </td>
-                <td><input type="text" v-model.number="polishRate" @input="computePolishSmith()" id="polishRate"
-                    name="polishRate" class="form-control"></td>
+                <td><input type="text" v-model.number="polishName" id="polishName" name="polishName" class="form-control"></td>
+                <td><input type="text" v-model.number="polishHrs" id="polishHrs" name="polishHrs" class="form-control"></td>
+                <td><input type="text" v-model.number="polishRate" @input="computePolishSmith()" id="polishRate" name="polishRate" class="form-control"></td>
                 <td><input type="text" v-model="polishCost" id="polishCost" name="polishCost" class="form-control"></td>
-                <td><input type="text" v-model.number="polishMu" id="polishMu" name="polishMu" class="form-control">
-                </td>
-                <td><input type="text" v-model.number="polishSp" id="polishSp" name="polishSp" class="form-control">
-                </td>
+                <td><input type="text" v-model.number="polishMu" id="polishMu" name="polishMu" class="form-control"></td>
+                <td><input type="text" v-model.number="polishSp" id="polishSp" name="polishSp" class="form-control"></td>
               </tr>
               <tr id="lastLaborRow">
                 <th scope="row"></th>
