@@ -1,0 +1,24 @@
+{
+  "name": "tonyt",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 4173"
+  },
+  "dependencies": {
+    "@google-cloud/local-auth": "^2.1.0",
+    "bootstrap": "^5.2.1",
+    "connect-history-api-fallback": "^2.0.0",
+    "express": "^4.18.1",
+    "express-sslify": "^1.2.0",
+    "googleapis": "^105.0.0",
+    "serve-static": "^1.15.0",
+    "vue": "^3.2.38",
+    "vue-router": "^4.1.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^3.0.3",
+    "vite": "^3.0.9"
+  }
+}
