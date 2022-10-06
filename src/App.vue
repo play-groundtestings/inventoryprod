@@ -27,11 +27,11 @@ export default {
 
 <template>
   <div class="container">
-    <div class="col-1">
+    <div class="col-3">
       <header>
         <nav class="navbar-nav" id="inventoryNavBar">
           <RouterLink to="/inventory">Inventory</RouterLink>
-          <RouterLink to="/">Add Inventory Card</RouterLink>
+          <RouterLink to="/">Add Card</RouterLink>
           <RouterLink to="/about">About</RouterLink>
         </nav>
       </header>

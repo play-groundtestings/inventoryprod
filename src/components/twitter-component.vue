@@ -6,6 +6,7 @@ export default {
     return {
       tableRows: [],
       text: "",
+      sold: "isSold",
       actual: "",
       replacement: "",
       retail: "",
@@ -38,14 +39,8 @@ export default {
     }
   },
   computed: {
-    doubledPrice() {
-      return this.user.price * 2
-    },
     totalActual() {
-      return parseInt(this.tester) * 2
-    },
-    computedInt() {
-      return parseInt(this.myInt) * 3
+      return (parseFloat(this.tester) * 2).toFixed(2);
     },
     computeLaborCost() {
 
@@ -53,34 +48,34 @@ export default {
       var computeStone = 0;
       var computePolish = 0;
 
-      if(parseInt(this.goldCost)>0){
-      computeGold = parseInt(this.goldCost)}
-      if(parseInt(this.stoneCost)>0){
-      computeStone = parseInt(this.stoneCost)}
-      if(parseInt(this.polishCost)>0){
-      computePolish = parseInt(this.polishCost)}
+      if(parseFloat(this.goldCost)>0){
+      computeGold = parseFloat(this.goldCost)}
+      if(parseFloat(this.stoneCost)>0){
+      computeStone = parseFloat(this.stoneCost)}
+      if(parseFloat(this.polishCost)>0){
+      computePolish = parseFloat(this.polishCost)}
 
       this.laborCost = computeGold + computeStone + computePolish
-      return this.laborCost;
+      return this.laborCost.toFixed(2);
     },
     computeGoldSmith() {
       if (this.goldRate) {
-        this.goldCost = this.goldHrs * this.goldRate;
+        this.goldCost = (this.goldHrs * this.goldRate).toFixed(2);
       }
     },
     computeStoneSmith() {
       if (this.stoneRate) {
-        this.stoneCost = this.stoneHrs * this.stoneRate;
+        this.stoneCost = (this.stoneHrs * this.stoneRate).toFixed(2);
       }
     },
     computePolishSmith() {
       if (this.polishRate) {
-        this.polishCost = this.polishHrs * this.polishRate;
+        this.polishCost = (this.polishHrs * this.polishRate).toFixed(2);
       }
     },
     computeFinalLaborSP() {
       if (this.totalMu) {
-        return this.laborCost * this.totalMu;
+        return parseFloat(this.laborCost * this.totalMu).toFixed(2);
       } else {
         return "";
       }
@@ -110,11 +105,14 @@ export default {
         });
     },
     computeCraftCost(index){
+      var fixedDecimal = 0;
       if(!this.craftmu[index]){
-        this.craftpcost[index] = this.craftnoofpcs[index] * this.craftunitcost[index]
+        fixedDecimal = this.craftnoofpcs[index] * this.craftunitcost[index]
+        this.craftpcost[index] = parseFloat(fixedDecimal).toFixed(2)
       }
       if(this.craftmu[index]){
-        this.craftsp[index] = this.craftnoofpcs[index] * this.craftunitcost[index] * this.craftmu[index]
+        fixedDecimal = this.craftnoofpcs[index] * this.craftunitcost[index] * this.craftmu[index]
+        this.craftsp[index] = parseFloat(fixedDecimal).toFixed(2)
       }
     },
     removeRow(index){
@@ -134,7 +132,9 @@ export default {
       this.tableRows.splice(index, 1);
     },
     computeTotals(value){
-      return value * this.quantity
+      var fixedDecimal = 0;
+      fixedDecimal = value * this.quantity
+      return parseFloat(fixedDecimal).toFixed(2)
     },
     computeCraftTot(value) {
       if(value.length>0){
@@ -143,9 +143,9 @@ export default {
       for (const val of arrayOfNumbers) {
         sum += val;
       }
-      return sum;}
+      return parseFloat(sum).toFixed(2);}
       else{
-        return "empty";
+        return "";
       }
     }
   },
@@ -326,8 +326,8 @@ export default {
             </div>
               </div>
 
-              <div class="col-1">
-            <div class="row">
+            <div class="col-1">
+              <div class="row">
                 <th scope="col"><a id="craftMatButton" @click="addRow">+</a></th>
               </div>
               <div class="row">
@@ -414,20 +414,41 @@ export default {
                 </div>
               </div>
 
-              <div class="row" id="lastFormRow">
-                <div class="col mb-3">
-                  <label for="buyName" class="form-label">SOLD TO</label>
-                  <input type="text" class="form-control" name="buyName" id="buyName">
-                </div>
-                <div class="col mb-3">
-                  <label for="buyDate" class="form-label">DATE</label>
-                  <input type="text" class="form-control" id="buyDate" name="buyDate">
-                </div>
-                <div class="col mb-3">
-                  <label for="buyPrice" class="form-label">PRICE</label>
-                  <input type="text" class="form-control" id="buyPrice" name="buyPrice">
-                </div>
+              <div class="row" id="radioForm">
+
+                <label>AVAILABILITY: {{sold}} </label>
+
+                  <div class="col-auto">
+                    <label for="isSold" class="col-form-label">SOLD</label>
+                  </div>
+                  <div class="col">
+                    <input type="radio" name="availability" id="isSold" v-model="sold" value="isSold" checked />
+                  </div>
+                  <div class="col-auto">
+                    <label for="isStocked" class="col-form-label">IN STOCK</label>
+                  </div>
+                  <div class="col">
+                    <input type="radio" name="availability" id="isStocked" v-model="sold" value="isStocked" />
+                  </div>
+         
               </div>
+
+              <div v-if="sold==='isSold'">
+                <div class="row" id="lastFormRow">
+                  <div class="col mb-3">
+                    <label for="buyName" class="form-label">SOLD TO</label>
+                    <input type="text" class="form-control" name="buyName" id="buyName">
+                  </div>
+                  <div class="col mb-3">
+                    <label for="buyDate" class="form-label">DATE</label>
+                    <input type="text" class="form-control" id="buyDate" name="buyDate">
+                  </div>
+                  <div class="col mb-3">
+                    <label for="buyPrice" class="form-label">PRICE</label>
+                    <input type="text" class="form-control" id="buyPrice" name="buyPrice">
+                  </div>
+                </div>
+              </div>  
 
               <div class="row">
                 <button type="submit" class="btn btn-light" style="border-color:black;">Submit</button>
@@ -547,7 +568,14 @@ export default {
   }
   
   #lastRegion {
-    padding-top: 5%;
+    padding-top: 1.5%;
+    
   }
   
+  #radioForm{
+    margin-top: 1.5%;
+    padding-top: 2.5%;
+    padding-bottom: 2.5%;
+  }
+
   </style>
