@@ -26,7 +26,6 @@ const router = createRouter({
       name: 'Inventory',
       component: Inventory
     },
-
   ]
 })
 
