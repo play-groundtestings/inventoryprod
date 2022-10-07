@@ -1,14 +1,25 @@
 const express = require('express');
 const serveStatic = require('serve-static');
-const port = 3000;
+const history = require('connect-history-api-fallback');
+const enforce = require('express-sslify');
 const {google} = require('googleapis');
 const keys = require('./keys.json');
+
 const app = express();
+
+app.use(enforce.HTTPS({ trustProtoHeader: true}));
+
+app.get('/hey', (req, res) => {
+  res.send('Hello World!')
+})
+
+app.use(history());
 
 app.use(serveStatic(__dirname + '/dist'));
 
 
-const client = new google.auth.JWT(
+
+/*const client = new google.auth.JWT(
 keys.client_email, null, keys.private_key, ['https://www.googleapis.com/auth/spreadsheets']
 );
 
@@ -41,11 +52,11 @@ async function gsrun(cl){
   
   return scope;
 
-}
+} */
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+
+
+app.listen(process.env.PORT || 5000);
 
 
 
