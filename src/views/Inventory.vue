@@ -17,7 +17,7 @@ export default {
 
   },
   mounted() {
-    axios.get('http://localhost:3000/hey')
+    axios.get('https://inventory-card-program.herokuapp.com/hey')
             .then(response => {
                 this.quote = response
              })
