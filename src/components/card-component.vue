@@ -1,12 +1,12 @@
 <script>
 
 export default {
-  name: "twitterComponent",
+  name: "cardComponent",
   data() {
     return {
       tableRows: [],
       text: "",
-      sold: "isSold",
+      sold: "Sold",
       actual: "",
       replacement: "",
       retail: "",
@@ -422,13 +422,13 @@ export default {
                     <label for="isSold" class="col-form-label">SOLD</label>
                   </div>
                   <div class="col">
-                    <input type="radio" name="availability" id="isSold" v-model="sold" value="isSold" checked />
+                    <input type="radio" name="availability" id="Sold" v-model="sold" value="Sold" checked />
                   </div>
                   <div class="col-auto">
                     <label for="isStocked" class="col-form-label">IN STOCK</label>
                   </div>
                   <div class="col">
-                    <input type="radio" name="availability" id="isStocked" v-model="sold" value="isStocked" />
+                    <input type="radio" name="availability" id="Stocked" v-model="sold" value="In-Stock" />
                   </div>
          
               </div>
@@ -441,7 +441,7 @@ export default {
                   </div>
                   <div class="col mb-3">
                     <label for="buyDate" class="form-label">DATE</label>
-                    <input type="text" class="form-control" id="buyDate" name="buyDate">
+                    <input type="date" class="form-control" id="buyDate" name="buyDate">
                   </div>
                   <div class="col mb-3">
                     <label for="buyPrice" class="form-label">PRICE</label>

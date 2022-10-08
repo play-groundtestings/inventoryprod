@@ -1,10 +1,10 @@
 <script setup>
-  import TwitterComponent from '../components/twitter-component.vue'
+  import cardComponent from '../components/card-component.vue'
   </script>
   
   <template>
     <main>
-    <TwitterComponent />
+    <cardComponent />
     </main>
   </template>
   

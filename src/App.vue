@@ -1,8 +1,5 @@
 <script>
-import TwitterComponent from './components/twitter-component.vue';
-//import CraftingComponent from './components/crafting-component.vue';
 import { RouterLink, RouterView } from "vue-router";
-//import BadComponent from './components/bad-component.vue';
 
 export default {
   name: 'App',
@@ -30,9 +27,8 @@ export default {
     <div class="col-3">
       <header>
         <nav class="navbar-nav" id="inventoryNavBar">
-          <RouterLink to="/inventory">Inventory</RouterLink>
-          <RouterLink to="/">Add Card</RouterLink>
-          <RouterLink to="/about">About</RouterLink>
+          <RouterLink to="/">Inventory</RouterLink>
+          <RouterLink to="/addcard">Add Card</RouterLink>
         </nav>
       </header>
     </div>
