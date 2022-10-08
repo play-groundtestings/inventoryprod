@@ -2,7 +2,7 @@ const express = require('express');
 const serveStatic = require('serve-static');
 const history = require('connect-history-api-fallback');
 const enforce = require('express-sslify');
-const keys = require('./keys.json');
+
 
 const app = express();
 

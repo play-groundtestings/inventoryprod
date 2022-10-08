@@ -433,7 +433,7 @@ export default {
          
               </div>
 
-              <div v-if="sold==='isSold'">
+              <div v-if="sold==='Sold'">
                 <div class="row" id="lastFormRow">
                   <div class="col mb-3">
                     <label for="buyName" class="form-label">SOLD TO</label>
