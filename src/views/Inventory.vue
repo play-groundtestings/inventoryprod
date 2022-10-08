@@ -1,5 +1,4 @@
 <script>
-import axios from 'axios'
 import {supabase} from '../supabase'
 
 
@@ -21,7 +20,7 @@ export default {
   },
   async mounted() {
 
-   let { data: inventory, error } = await supabase.from('crafting').select('*')
+   let { data: inventory, error } = await supabase.from('inventory').select('*')
    console.log(supabase)
    console.log(inventory)
    this.inventoryList = inventory
@@ -40,18 +39,21 @@ export default {
       <input type="text" name="searchParam" id="searchParam">
       <button type="submit">Search</button>
     </form></h2>
+
     <div class="Inventory">
       <div v-if="loadedData===true"> 
         <div class="row">
-          <div class="col-2" v-for="card in inventoryList">
-            <div>{{ card }}</div> 
+          <div class="card col-auto" v-for="card in inventoryList">
+            <div class="card-body">
+              <h5 class="card-title"> {{card.itemType}}</h5>
+              <p class="card-text"> {{card.skuNo}} </p>
+              <a :href="`/inventory/${card.id}`" class="btn btn-primary">Go</a>
+            </div>
           </div>
         </div>
       </div>
-
       <div v-if="loadedData===false"> Data is Loading </div>
-         
-        <!--<a :href="`/inventory/${randomId}`">Link to single view page</a>-->
     </div>
+
 </template>
 

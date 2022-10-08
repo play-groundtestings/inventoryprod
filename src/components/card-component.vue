@@ -1,32 +1,48 @@
 <script>
+import {supabase} from '../supabase'
+
 
 export default {
   name: "cardComponent",
   data() {
     return {
       tableRows: [],
+      skuNo: "",
+      date: "",
+      joNo: "",
+      itemType: "",
+      itemColor: "",
+      itemMaterial: "",
       text: "",
       sold: "Sold",
+      buyDate: "",
+      buyName: "",
+      buyPrice: "",
+      preparedBy: "",
+      encodedBy: "",
       actual: "",
       replacement: "",
       retail: "",
       tag: "",
       quantity: "",
-      craftpcost: [],
-      craftrepcost: [],
-      craftsp: [],
-      craftnoofpcs: [],
-      craftunitcost: [],
-      craftmu: [],
       goldHrs: "",
+      goldName: "",
+      goldMu: "",
+      goldSp: "",
       goldRate: "",
       goldCost: "",
+      stoneName: "",
+      stoneMu: "",
+      stoneSp: "",
       stoneHrs: "",
       stoneRate: "",
       stoneCost: "",
       polishHrs: "",
       polishRate: "",
       polishCost: "",
+      polishMu: "",
+      polishSp: "",
+      polishName: "",
       laborCost: 0,
       totalMu: "",
       craftcour: [],
@@ -35,7 +51,13 @@ export default {
       craftwt: [],
       craftsupinvdac: [],
       craftdescription: [],
-      craftmatl: []
+      craftmatl: [],
+      craftpcost: [],
+      craftrepcost: [],
+      craftsp: [],
+      craftnoofpcs: [],
+      craftunitcost: [],
+      craftmu: []
     }
   },
   computed: {
@@ -147,6 +169,83 @@ export default {
       else{
         return "";
       }
+    },
+    async createCard(){
+
+      const { data, count } = await supabase
+      .from('inventory')
+      .select('*', { count: 'exact' })
+
+      console.log(count)
+
+      const { fill, error } = await supabase
+      .from('inventory') 
+      .insert([
+        { id: count + 1,
+          skuNo: '55-2aa',
+          itemType: 'necklace', },
+      ])
+
+      alert("Inventory Card Successfully Added.")
+      this.$router.push('/')
+
+      /*
+      const { data, error } = await supabase
+      .from('inventory') 
+      .insert([
+        { id: 2,
+          skuNo: '55-2aa',
+          itemType: 'necklace' },
+      ])
+
+      for(var i=0; i<this.tableRows.length; i++){
+      const { data, error } = await supabase.from('crafting').insert([
+        { id: 55+i,
+        inventoryId: 1,
+        description: this.craftdescription[i]},
+        ])
+      } */
+
+      /*
+          console.log("1st row " + this.skuNo + this.date + this.joNo + this.itemType + this.itemColor + this.itemMaterial + this.quantity)
+          console.log("2nd row " + this.actual + this.replacement + this.retail + this.tag)
+          var totalActual = this.computeTotals(this.actual)
+          var totalReplacement = this.computeTotals(this.replacement)
+          var totalRetail = this.computeTotals(this.retail)
+          var totalTag = this.computeTotals(this.tag)
+          console.log(totalActual)
+          var craftPCost = this.computeCraftTot(this.craftpcost)
+          var craftRepCost = this.computeCraftTot(this.craftrepcost)
+          var craftSpCost = this.computeCraftTot(this.craftsp)
+          console.log(craftPCost)
+          var laborTotalActual = this.computeLaborCost
+          var laborTotalSp = this.computeFinalLaborSP
+          console.log(laborTotalActual)
+          console.log(laborTotalSp)
+         console.log("lastrow " + this.preparedBy + this.encodedBy + this.sold + this.buyName + this.buyDate + this.buyPrice)  
+      
+      */
+
+    /*  labor
+    console.log("gold " + this.goldName + this.goldHrs + this.goldRate + this.goldCost + this.goldMu + this.goldSp)
+    console.log("stone " + this.stoneName + this.stoneHrs + this.stoneRate + this.stoneCost + this.stoneMu + this.stoneSp)
+    console.log("polisher " + this.polishName + this.polishHrs + this.polishRate + this.polishCost + this.polishMu + this.polishSp )
+    */
+
+
+/*
+     this.tableRows.forEach((element, index) => {
+
+      console.log(this.craftnoofpcs[index] + this.craftmatl[index] + this.craftdescription[index] + this.craftsupinvdac[index] + this.craftwt[index] +
+      this.craftunitcost[index] + this.craftrt[index] + this.craftpcost[index] + this.craftcurrt[index] + this.craftrepcost[index] + this.craftmu[index]
+      + this.craftcour[index] + this.craftsp[index])
+
+      const { data, error } = await supabase.from('crafting').insert([
+        { some_column: 'someValue',
+         other_column: 'otherValue' },
+        ])
+
+     })   */  
     }
   },
   components: {
@@ -161,7 +260,7 @@ export default {
 
 <template>
 <div class="greetings"> {{name}}</div>
-<form id="masterForm" @submit.prevent="addRow" autocomplete="off">
+<form id="masterForm" @submit.prevent="createCard" autocomplete="off">
       <div class="row">
         <div class="col-11">
           <main>
@@ -170,37 +269,37 @@ export default {
                 <label for="skuNo" class="col-form-label">SKU NO.</label>
               </div>
               <div class="col ">
-                <input type="text" id="skuNo" name="skuNo" class="form-control">
+                <input type="text" id="skuNo" v-model="skuNo" name="skuNo" class="form-control">
               </div>
               <div class="col-auto">
                 <label for="date" class="col-form-label">DATE</label>
               </div>
               <div class="col">
-                <input type="date" id="date" name="date" class="form-control">
+                <input type="date" id="date" v-model="date" name="date" class="form-control">
               </div>
               <div class="col-auto">
                 <label for="joNo" class="col-form-label">JO #</label>
               </div>
               <div class="col">
-                <input type="text" id="joNo" name="joNo" class="form-control">
+                <input type="text" id="joNo" v-model="joNo" name="joNo" class="form-control">
               </div>
               <div class="col-auto">
                 <label for="itemType" class="col-form-label">TYPE</label>
               </div>
               <div class="col">
-                <input type="text" id="itemType" name="itemType" class="form-control">
+                <input type="text" id="itemType" v-model="itemType" name="itemType" class="form-control">
               </div>
               <div class="col-auto">
                 <label for="itemColor" class="col-form-label">COLOR</label>
               </div>
               <div class="col">
-                <input type="text" id="itemColor" name="itemColor" class="form-control">
+                <input type="text" id="itemColor" v-model="itemColor" name="itemColor" class="form-control">
               </div>
               <div class="col-auto">
                 <label for="itemMaterial" class="col-form-label">MATERIAL</label>
               </div>
               <div class="col">
-                <input type="text" id="itemMaterial" name="itemMaterial" class="form-control">
+                <input type="text" id="itemMaterial" v-model="itemMaterial" name="itemMaterial" class="form-control">
               </div>
               <div class="col-auto">
                 <label for="quantity" class="col-form-label">QUANTITY</label>
@@ -242,7 +341,7 @@ export default {
                 <label for="totalActual" class="col-form-label">TOTAL ACTUAL</label>
               </div>
               <div class="col">
-                <input type="text" :value=computeTotals(this.actual) id="totalActual" name="totalActual" class="form-control">
+                <input type="text" :value=computeTotals(actual) id="totalActual" name="totalActual" class="form-control">
               </div>
               <div class="col-auto">
                 <label for="totalReplacement" class="col-form-label">TOTAL REPLACEMENT</label>
@@ -357,7 +456,7 @@ export default {
                   <tbody>
                     <tr>
                       <th scope="row">Goldsmith</th>
-                      <td><input type="text" v-model.number="goldName" id="goldName" name="goldName" class="form-control"></td>
+                      <td><input type="text" v-model="goldName" id="goldName" name="goldName" class="form-control"></td>
                       <td><input type="text" v-model.number="goldHrs" id="goldHrs" name="goldHrs" class="form-control"></td>
                       <td><input type="text" v-model.number="goldRate" @input="computeGoldSmith" id="goldRate" name="goldRate" class="form-control"></td>
                       <td><input type="text" v-model="goldCost" id="goldCost" name="goldCost" class="form-control"></td>
@@ -366,7 +465,7 @@ export default {
                     </tr>
                     <tr>
                       <th scope="row">Stone Setter</th>
-                      <td><input type="text" v-model.number="stoneName" id="stoneName" name="stoneName" class="form-control"></td>
+                      <td><input type="text" v-model="stoneName" id="stoneName" name="stoneName" class="form-control"></td>
                       <td><input type="text" v-model.number="stoneHrs" id="stoneHrs" name="stoneHrs" class="form-control"></td>
                       <td><input type="text" v-model.number="stoneRate" id="stoneRate" @input="computeStoneSmith" name="stoneRate" class="form-control"></td>
                       <td><input type="text" v-model="stoneCost" id="stoneCost" name="stoneCost" class="form-control"></td>
@@ -375,7 +474,7 @@ export default {
                     </tr>
                     <tr>
                       <th scope="row">Polisher</th>
-                      <td><input type="text" v-model.number="polishName" id="polishName" name="polishName" class="form-control"></td>
+                      <td><input type="text" v-model="polishName" id="polishName" name="polishName" class="form-control"></td>
                       <td><input type="text" v-model.number="polishHrs" id="polishHrs" name="polishHrs" class="form-control"></td>
                       <td><input type="text" v-model.number="polishRate" @input="computePolishSmith" id="polishRate" name="polishRate" class="form-control"></td>
                       <td><input type="text" v-model="polishCost" id="polishCost" name="polishCost" class="form-control"></td>
@@ -404,13 +503,13 @@ export default {
                   <label for="preparedBy" class="col-form-label">PREPARED BY</label>
                 </div>
                 <div class="col ">
-                  <input type="text" id="preparedBy" name="preparedBy" class="form-control">
+                  <input type="text" id="preparedBy" v-model="preparedBy" name="preparedBy" class="form-control">
                 </div>
                 <div class="col-auto">
                   <label for="encodedBy" class="col-form-label">ENCODED BY</label>
                 </div>
                 <div class="col ">
-                  <input type="text" id="encodedBy" name="encodedBy" class="form-control">
+                  <input type="text" id="encodedBy" v-model="encodedBy" name="encodedBy" class="form-control">
                 </div>
               </div>
 
@@ -437,15 +536,15 @@ export default {
                 <div class="row" id="lastFormRow">
                   <div class="col mb-3">
                     <label for="buyName" class="form-label">SOLD TO</label>
-                    <input type="text" class="form-control" name="buyName" id="buyName">
+                    <input type="text" class="form-control" v-model="buyName" name="buyName" id="buyName">
                   </div>
                   <div class="col mb-3">
                     <label for="buyDate" class="form-label">DATE</label>
-                    <input type="date" class="form-control" id="buyDate" name="buyDate">
+                    <input type="date" class="form-control" v-model="buyDate" id="buyDate" name="buyDate">
                   </div>
                   <div class="col mb-3">
                     <label for="buyPrice" class="form-label">PRICE</label>
-                    <input type="text" class="form-control" id="buyPrice" name="buyPrice">
+                    <input type="text" class="form-control" v-model="buyPrice" id="buyPrice" name="buyPrice">
                   </div>
                 </div>
               </div>  
