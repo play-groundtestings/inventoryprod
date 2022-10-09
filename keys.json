@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "test-364612",
+  "private_key_id": "6e726611b745535406ec8c51cc3ea5da2744c08c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC2GHHopt9kGKKG\nK5mCCzaFEkbrj+B2J0GCVsGCXbSczesgyc0cCMmJ7zSLV9IGG27suQGdn+WP/IKK\nlly0RX5Jy0Jb61iN5h5GVcrCDKVwUAtssSQDqSSlQxzWQtotl1Zs5V5y+qhGHWjD\nMNsMzXu1iXw416rcD57vSPR4hnySo1f98HHihCxmAJ02NoJz16pW8euLtfPoA77q\nGQx8AhZFcel2zy7homNS3zXUi7KL49UiPJVa4cL5WRB2X7y6dgiqtaCs7o78M9wl\nUwX9w2EOad1fIP/BpD6Rg7W9dHGDSFqt5AGrKgsPmir1JUP0FTyHEikkpARZE/T4\n1T1l6DafAgMBAAECggEAEv1++PcDhQ+B+OFtzj9tHXjyfHkyEiBglz8vnxuL98O3\nKbbh9R0q0ipoHcANidAtQ/K8qxDp1+z1kDkYzJQSv49ltEBZqTK+etynmzpxERgd\nQ5CVuOwC2QP5az7oPKjzvReOlLR0qBtDuazMALcil6QRmGaleEheGDD7jeDjTPIe\n7vX8OvBWMJ+1Z3Ejy157ZJxoie5nBDgNPJ3srvC+om8KcPjxZT2g/Wsg2m0i5dAt\ngTubRDWNzAnQEAiv01Hw6Id5dhV7w0lpV7uLb3lif6eB6R0p5iQwmjwY4uca9+Nz\nJFHyIjvMpJWIH9my18bXX3T2jij+4KW3EfYtgrazQQKBgQDfF73z7GZOkzYseFvF\nKnrrIw9i+Vl8eMhP4bLpL3N/c4WexDW8fICibA0jufJ30Gd5MqN81y2bnhCNdpH7\nCctAl4evtN2gC6dZomLR1HcAcR3z1pr7VAMDrSByk6XIY9PGfGleUSTxTKzfHorE\nZ1vU1VnQStV2ptCkj+HWdkqrAwKBgQDQ9JiNgi5noDqVOw/0pxEujmLj07lsDK6+\ndvNsblBaXyUK3zhfL4gAA27AfcH7ZV8Rq4k+4F1Hwkb1shEVPe9xSLPPTM5xKH1B\nC5hJuQyUA+asFP5dACE6Ju77SPiXYaMcV6S/KY3h6ZmeI9g5k42WmmKFrl/k7rhJ\noUm4gclFNQKBgAZKbRjLubbNf+GRI0VUBVNMEcsArP1Niph2DM12gRM+9q2bash9\n2kK6OUSgoa2vOru4KdQDXU3eDyluBn/Fru2LWFAkEXvJ2FY2tgKksxZYGjgd/RDJ\nNayM3TVd5HbaGcanC3GVaC1FtDo2akNPhs9hlL7C3XITEh8Rz5R0kXZxAoGAISfe\nmP2iHWFISmufwYNM76U6PcpXrrRoeeJoB7mNWHmmaA45ZKknHFFvHm4V/Kz+I9Cj\nK23wfzVtiwjhOwyj1MbjeS5Hx57UGSEc3f3V6BqiXIXMQreFjjOlUgwnHeYpOpMR\nmh+e2sz1SimH4sLuAYqnvWyI3MugRFaqWvOFG00CgYBxK7l3how5Or0mFyVALn3w\nhTT5mZfvxIyTiVYdD2Z0X5VK5amgB/JQJkSNfNiSVf1NbvSip1dIHx20fHMZfDv7\naZ6vjNyzynezMJroYXU1kWtekiR+2IyLy/ExQp7406lTnQ6MOauqOmAOHrKqfQ7s\nS71eBVns1GOecilhefT+iQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "tempinventory@test-364612.iam.gserviceaccount.com",
+  "client_id": "113019355021022912751",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/tempinventory%40test-364612.iam.gserviceaccount.com"
+}
