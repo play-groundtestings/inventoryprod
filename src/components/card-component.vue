@@ -212,7 +212,7 @@ export default {
           buyPrice: this.buyPrice ? this.buyPrice : 1, },
           ])
 
-          console.log(inventoryerror)
+          
 
           for(var i=0; i<this.tableRows.length; i++){
           const { craftingdata, craftingerror } = await supabase.from('crafting').insert([
@@ -272,7 +272,7 @@ export default {
         ]) 
 
       alert("Inventory Card Successfully Added.")
-      //this.$router.push('/')
+      this.$router.push('/')
 
 
     }

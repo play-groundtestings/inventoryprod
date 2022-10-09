@@ -8,10 +8,6 @@ const app = express();
 
 app.use(enforce.HTTPS({ trustProtoHeader: true}));
 
-app.get('/hey', (req, res) => {
-  res.send('Hello World!')
-})
-
 app.use(history());
 
 app.use(serveStatic(__dirname + '/dist'));

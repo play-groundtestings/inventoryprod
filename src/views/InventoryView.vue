@@ -27,8 +27,6 @@ export default {
 
       this.craftingInfo = data
       this.loadedData = true
-      console.log(data[0].id)
-      console.log(this.craftingInfo)
 
     },
 
@@ -39,7 +37,7 @@ export default {
         .from('labor')
         .select('*')
         .eq("inventorylink", filterString)
-      // this.cardInfo = card
+      
       this.laborInfo = data
       this.loadedData = true
     },
@@ -52,9 +50,7 @@ export default {
         .from('inventory')
         .select('*')
         .eq('inventorylink', filterString)
-      // this.cardInfo = card
-      console.log(error)
-      console.log(data)
+
       this.cardInfo = data
       this.loadedData = true
 
