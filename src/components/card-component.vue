@@ -292,7 +292,7 @@ export default {
   <div class="greetings"> {{name}}</div>
   <form id="masterForm" @submit.prevent="createCard" autocomplete="off">
     <div class="row">
-      <div class="col-11">
+      <div class="col">
         <main>
           <div class="row padTop" id="firstRegion">
             <div class="col-auto">
@@ -396,9 +396,9 @@ export default {
           </div>
 
           <div class="row">
-            <div class="col-11">
+            <div class="col" style="margin:12px">
               <div class="row padTop" id="autoTable">
-                <table class="table-bordered" id="maintab">
+                <table class="col table-bordered" id="maintab">
                   <thead id="craftingMatStyle">
                     <tr>
                       <th class="text-center" colspan="13">CRAFTING MATERIALS</th>
@@ -704,16 +704,13 @@ label {
 #craftMatButton {
   cursor: pointer;
   font-size: 200%;
-  padding-left: 30%;
-  padding-right: 30%;
   text-align: center;
 }
 
 #craftRemButton {
   cursor: pointer;
   font-size: 200%;
-  padding-left: 35%;
-  padding-right: 35%;
+  padding-left: 5%;
   text-align: center;
 }
 

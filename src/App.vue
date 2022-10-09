@@ -23,7 +23,6 @@ export default {
 </script>
 
 <template>
-  <div class="container">
     <div class="col-3">
       <header>
         <nav class="navbar-nav" id="inventoryNavBar">
@@ -32,11 +31,11 @@ export default {
         </nav>
       </header>
     </div>
-    <div class="col-11">
+    <div class="col">
       <hr>
       <router-view></router-view>
     </div>
-  </div>
+
 </template>
 
 <style>
