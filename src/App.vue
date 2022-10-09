@@ -28,6 +28,7 @@ export default {
         <nav class="navbar-nav" id="inventoryNavBar">
           <RouterLink to="/">Inventory</RouterLink>
           <RouterLink to="/addcard">Add Card</RouterLink>
+          <RouterLink to="/search">Search</RouterLink>
         </nav>
       </header>
     </div>

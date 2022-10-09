@@ -3,10 +3,10 @@ import {supabase} from '../supabase'
 
 
 export default {
-  name: 'inventoryList',
+  name: 'searchView',
   data() {
     return {
-      inventoryList: [],
+      searchList: [],
         loadedData: false
  
     }
@@ -21,9 +21,7 @@ export default {
   async mounted() {
 
    let { data: inventory, error } = await supabase.from('inventory').select('*')
-   console.log(supabase)
-   console.log(inventory)
-   this.inventoryList = inventory
+   this.searchList = inventory
    this.loadedData = true
 
   }
@@ -34,16 +32,19 @@ export default {
 
 
 <template>
-    <h1>Inventory</h1>
+    <h1>Search</h1>
+    <h2><form>
+      <input type="text" name="searchParam" id="searchParam">
+      <button type="submit">Search</button>
+    </form></h2>
 
     <div class="Inventory">
       <p v-if="loadedData===true"> 
         <div class="container row">
-          <div class="card col-auto" v-for="card in inventoryList">
+          <div class="card col-auto" v-for="card in searchList">
             <div class="card-body">
-              <h5 class="card-title"> {{card.itemName}}</h5>
+              <h5 class="card-title"> {{card.itemType}}</h5>
               <p class="card-text"> {{card.skuNo}} </p>
-              <p class="card-text"> {{card.itemType}} </p>
               <a :href="`/inventory/${card.id}`" class="btn btn-primary">Go</a>
             </div>
           </div>

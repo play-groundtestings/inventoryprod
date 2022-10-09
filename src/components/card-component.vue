@@ -9,6 +9,7 @@ export default {
   data() {
     return {
       tableRows: [],
+      itemName: "",
       skuNo: "",
       date: "",
       joNo: "",
@@ -184,6 +185,7 @@ export default {
         .insert([
         { id: distinguisher,
           inventorylink: distinguisher,
+          itemName: this.itemName,
           skuNo: this.skuNo,
           date: this.date,
           joNo: this.joNo,
@@ -294,6 +296,16 @@ export default {
     <div class="row">
       <div class="col">
         <main>
+
+          <div class="row padTop">
+            <div class="col-auto">
+              <label for="itemName" class="col-form-label">ITEM</label>
+            </div>
+            <div class="col-4">
+              <input type="text" id="itemName" v-model="itemName" name="itemName" class="form-control" required>
+            </div>
+          </div>
+
           <div class="row padTop" id="firstRegion">
             <div class="col-auto">
               <label for="skuNo" class="col-form-label">SKU NO.</label>
@@ -732,4 +744,9 @@ label {
   padding-top: 2.5%;
   padding-bottom: 2.5%;
 }
+
+#firstRegion {
+  padding-top: 1%;
+}
+
 </style>
