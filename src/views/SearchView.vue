@@ -18,6 +18,8 @@ export default {
   methods: {
     async searchQuery(){
 
+      var chosenParameter = this.searchParameter
+
       if(this.sold=="All" && this.searchParameter==""){
         let { data: inventory, error } = await supabase.from('inventory').select('*')
         this.searchList = inventory
@@ -26,12 +28,32 @@ export default {
         let { data: inventory, error } = await supabase.from('inventory').select('*').textSearch('itemType', this.searchParameter)
         this.searchList = inventory
         this.loadedData = true
-      }else if(this.sold =="In-Stock" || this.sold =="Sold"  && this.searchParameter==""){
-        let { data: inventory, error } = await supabase.from('inventory').select('*').textSearch('availability', this.sold)
+      }
+      
+      if(this.sold =="In-Stock" && chosenParameter != ""){
+        let { data: inventory, error } = await supabase.from('inventory').select('*').textSearch('availability', this.sold).textSearch('itemType', this.searchParameter)
+        console.log("notempty" + this.searchParameter)
+        console.log(this.sold)
         this.searchList = inventory
         this.loadedData = true
-      }else if(this.sold =="In-Stock" || this.sold =="Sold"  && this.searchParameter){
+      }else if(this.sold =="In-Stock" && chosenParameter==""){
+        let { data: inventory, error } = await supabase.from('inventory').select('*').textSearch('availability', this.sold)
+        console.log("empty" + this.searchParameter)
+        console.log(this.sold)
+        this.searchList = inventory
+        this.loadedData = true
+      }
+
+      if(this.sold =="Sold" && chosenParameter != ""){
         let { data: inventory, error } = await supabase.from('inventory').select('*').textSearch('availability', this.sold).textSearch('itemType', this.searchParameter)
+        console.log("notempty" + this.searchParameter)
+        console.log(this.sold)
+        this.searchList = inventory
+        this.loadedData = true
+      }else if(this.sold =="Sold" && chosenParameter==""){
+        let { data: inventory, error } = await supabase.from('inventory').select('*').textSearch('availability', this.sold)
+        console.log("empty" + this.searchParameter)
+        console.log(this.sold)
         this.searchList = inventory
         this.loadedData = true
       }
@@ -54,26 +76,27 @@ export default {
     <h1>Search</h1>
 
     <form @submit.prevent="searchQuery">
-      <div class="row" id="radioForm">
-        <div class="col-1">
-          <input type="radio" name="availability" id="All" v-model="sold" value="All" checked/>
-          ALL
+       <div class="row" id="radioForm">
+          <div class="col-1">
+            <input type="radio" name="availability" id="All" v-model="sold" value="All" checked/>
+            ALL
           </div>
           <div class="col-1">
-          <input type="radio" name="availability" id="Sold" v-model="sold" value="Sold"/>
-          SOLD
+            <input type="radio" name="availability" id="Sold" v-model="sold" value="Sold"/>
+            SOLD
           </div>
           <div class="col-2">
-          <input type="radio" name="availability" id="Stocked" v-model="sold" value="In-Stock" />
-          IN STOCK
+            <input type="radio" name="availability" id="Stocked" v-model="sold" value="In-Stock" />
+            IN STOCK
           </div>
         </div>
+
         <div class="row">
-        <h2>
-        <input type="text" name="searchParameter" v-model="searchParameter" id="searchParameter">
-        <button type="submit">Search</button>
-        </h2>
-      </div>
+          <h2>
+          <input type="text" name="searchParameter" v-model="searchParameter" id="searchParameter">
+          <button type="submit">Search</button>
+          </h2>
+        </div>
     </form>
 
     <div class="Inventory">
