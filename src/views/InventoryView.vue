@@ -12,6 +12,7 @@ export default {
       cardInfo: [],
       craftingInfo: [],
       laborInfo: [],
+      imgInfo: ""
     }
   },
   computed: {
@@ -75,6 +76,13 @@ export default {
       .delete()
       .eq('inventorylink', filterString)
 
+      this.imgInfo = this.cardInfo[0].imgSrc.split('/').pop()
+
+      const { storagedata, storageerror } = await supabase
+      .storage
+      .from('images')
+      .remove(this.imgInfo)
+
       alert("Inventory Card Deleted.")
       this.$router.push('/')
 
@@ -113,6 +121,8 @@ export default {
             <div style="background-color: greenyellow"> {{cardInfo}} </div>
            <div style="background-color: aliceblue"> {{craftingInfo}} </div>
             <div style="background-color: plum"> {{laborInfo}} </div>
+            <div style="background-color: royalblue"> {{cardInfo[0].imgSrc}} </div>
+            <img :src="cardInfo[0].imgSrc">
             <button @click="deleteEverything()"> Delete </button>
           </div>
         </div>

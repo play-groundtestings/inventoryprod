@@ -32,43 +32,31 @@ export default {
 
       if (this.sold == "In-Stock" && chosenParameter != "") {
         let { data: inventory, error } = await supabase.from('inventory').select('*').textSearch('availability', this.sold).textSearch('itemType', this.searchParameter)
-        console.log("notempty" + this.searchParameter)
-        console.log(this.sold)
         this.searchList = inventory
         this.loadedData = true
       } else if (this.sold == "In-Stock" && chosenParameter == "") {
         let { data: inventory, error } = await supabase.from('inventory').select('*').textSearch('availability', this.sold)
-        console.log("empty" + this.searchParameter)
-        console.log(this.sold)
         this.searchList = inventory
         this.loadedData = true
       }
 
       if (this.sold == "Sold" && chosenParameter != "") {
         let { data: inventory, error } = await supabase.from('inventory').select('*').textSearch('availability', this.sold).textSearch('itemType', this.searchParameter)
-        console.log("notempty" + this.searchParameter)
-        console.log(this.sold)
         this.searchList = inventory
         this.loadedData = true
       } else if (this.sold == "Sold" && chosenParameter == "") {
         let { data: inventory, error } = await supabase.from('inventory').select('*').textSearch('availability', this.sold)
-        console.log("empty" + this.searchParameter)
-        console.log(this.sold)
         this.searchList = inventory
         this.loadedData = true
       }
 
       if (this.sold == "skuNo" && chosenParameter != "") {
         let { data: inventory, error } = await supabase.from('inventory').select('*').textSearch('skuNo', this.searchParameter)
-        console.log("notempty" + this.searchParameter)
-        console.log(this.sold)
         this.searchList = inventory
         this.loadedData = true
       }
       if (this.sold == "joNo" && chosenParameter != "") {
         let { data: inventory, error } = await supabase.from('inventory').select('*').textSearch('joNo', this.searchParameter)
-        console.log("notempty" + this.searchParameter)
-        console.log(this.sold)
         this.searchList = inventory
         this.loadedData = true
       }

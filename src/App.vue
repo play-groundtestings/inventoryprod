@@ -29,7 +29,6 @@ export default {
           <RouterLink to="/">Inventory</RouterLink>
           <RouterLink to="/addcard">Add Card</RouterLink>
           <RouterLink to="/search">Search</RouterLink>
-          <RouterLink to="/avatar">Search</RouterLink>
         </nav>
       </header>
     </div>
