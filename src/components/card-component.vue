@@ -60,7 +60,9 @@ export default {
       craftsp: [],
       craftnoofpcs: [],
       craftunitcost: [],
-      craftmu: []
+      craftmu: [],
+      uploadImageFile: null,
+      imagePath: ""
     }
   },
   computed: {
@@ -110,6 +112,10 @@ export default {
     }
   },
   methods: {
+    selectFile(event){
+            this.uploadImageFile = event.target.files[0]
+            console.log(this.uploadImageFile)
+        },
     followUser() {
       this.followers++
     },
@@ -180,12 +186,24 @@ export default {
     async createCard() {
       var distinguisher = uid()
 
+      const imageFile = this.uploadImageFile
+      const fileExt = imageFile.name.split('.').pop()
+      const generateName = uid()
+      const fileName = `${generateName}.${fileExt}`
+      this.imagePath = `https://lsckvveawgzilvwkhzbd.supabase.co/storage/v1/object/public/images/${fileName}`
+
+      const { data, error } = await supabase.storage
+      .from('images')
+      .upload(fileName, imageFile)
+
+
       const { inventorydata, inventoryerror } = await supabase
         .from('inventory')
         .insert([
         { id: distinguisher,
           inventorylink: distinguisher,
           itemName: this.itemName,
+          imgSrc: this.imagePath,
           skuNo: this.skuNo,
           date: this.date,
           joNo: this.joNo,
@@ -273,6 +291,8 @@ export default {
         occupation: "polisher", },
         ]) 
 
+
+
       alert("Inventory Card Successfully Added.")
       this.$router.push('/')
 
@@ -303,6 +323,9 @@ export default {
             </div>
             <div class="col-4">
               <input type="text" id="itemName" v-model="itemName" name="itemName" class="form-control" required>
+            </div>
+            <div class="col-auto">
+              <input type="file" @change="selectFile">
             </div>
           </div>
 
