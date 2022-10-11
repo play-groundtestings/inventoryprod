@@ -9,7 +9,10 @@ export default {
       searchList: [],
       loadedData: false,
       searchParameter: "",
-      sold: "All"
+      availability: "All",
+      identifier: null
+
+
 
     }
   },
@@ -64,19 +67,31 @@ export default {
     },
 
     async conditionalSearch() {
-      const filterByName = 'gold'
-      const filterPopLow = 'In-Stock'
+      var chosenParameter = this.searchParameter
+      var filterByAvailability = this.availability
       //  const filterPopHigh = 10000
+      console.log(this.availability)
+      console.log(this.searchParameter)
 
-      let query = supabase
-        .from('inventory')
-        .select('*')
+      let query = supabase.from('inventory').select('*')
+     // if (filterByName) { query = query.eq('itemColor', filterByName) }
+     //  if (filterPopHigh) { query = query.lt('population', filterPopHigh) } URGENT =======!!!?!?!?!?!??!?!?! add item type color material. then ur done
+      if(filterByAvailability !== 'All'){
+        query = query.eq('availability', filterByAvailability)
+      }
 
-      if (filterByName) { query = query.eq('itemColor', filterByName) }
-      if (filterPopLow) { query = query.eq('availability', filterPopLow) }
-      //  if (filterPopHigh) { query = query.lt('population', filterPopHigh) }
+      if(this.identifier === 'Property'){
+        
+      } else if (this.identifier ==='skuNo' || this.identifier === "joNo"){
+        query = query.eq(this.identifier, chosenParameter)
+      } else {
 
+      }
+  
       const { data, error } = await query
+
+        console.log(data)
+        console.log("error" + error)
 
       this.searchList = data
       this.loadedData = true
@@ -94,31 +109,36 @@ export default {
 
 
 <template>
-  <h1>Search</h1>
+  <h1>Search {{availability}}</h1>
 
-  <form @submit.prevent="searchQuery">
+  <form @submit.prevent="conditionalSearch">
     <div class="row" id="radioForm">
       <div class="col-1">
-        <input type="radio" name="All" id="All" v-model="sold" value="All" checked />
+        <input type="radio" name="All" id="All" v-model="availability" value="All" checked />
         ALL
       </div>
       <div class="col-1">
-        <input type="radio" name="Sold" id="Sold" v-model="sold" value="Sold" />
+        <input type="radio" name="Sold" id="Sold" v-model="availability" value="Sold" />
         SOLD
       </div>
       <div class="col-1">
-        <input type="radio" name="Stocked" id="Stocked" v-model="sold" value="In-Stock" />
+        <input type="radio" name="Stocked" id="Stocked" v-model="availability" value="In-Stock" />
         IN STOCK
       </div>
       <div class="col-1">
-        <input type="radio" name="skuNo" id="skuNo" v-model="sold" value="skuNo" />
+        <input type="radio" name="skuNo" id="skuNo" v-model="identifier" value="skuNo" />
         SKU NO
       </div>
       <div class="col-1">
-        <input type="radio" name="joNo" id="joNo" v-model="sold" value="joNo" />
+        <input type="radio" name="joNo" id="joNo" v-model="identifier" value="joNo" />
         JO NO
       </div>
+      <div class="col-1">
+        <input type="radio" name="Property" id="Property" v-model="identifier" value="Property" />
+        BY PROPERTY
+      </div>
     </div>
+    
 
     <div class="row">
       <h2>
@@ -134,7 +154,7 @@ export default {
       <div class="card col-auto"  v-for="card in searchList">
 
         <div class="row no-gutters">
-          <div v-if="card.imgSrc" class="col-md-4">
+          <div v-if="card.imgSrc!=' '" class="col-md-4">
             <img :src="card.imgSrc" class="card-img" alt="...">
           </div>
           <div class="col-md-8">
@@ -166,6 +186,10 @@ export default {
   margin-bottom: 1.5%;
 }
 
+#radioForm{
+  padding: 0;
+
+}
 .card a {
   color: black;
   background-color: white;

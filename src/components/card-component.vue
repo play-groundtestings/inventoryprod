@@ -224,6 +224,7 @@ export default {
           totalCraftRep: this.computeCraftTot(this.craftrepcost),
           totalCraftSp: this.computeCraftTot(this.craftsp),
           totalLaborActual: this.computeLaborCost,
+          totalLaborMu: this.totalMu,
           totalLaborSp: this.computeFinalLaborSP ,
           preparedBy: this.preparedBy ? this.preparedBy : " ",
           encodedBy: this.encodedBy ? this.encodedBy : " ",

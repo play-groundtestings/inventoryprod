@@ -111,22 +111,61 @@ export default {
 
 <template>
   <main>
-    <h1>Single Page View</h1>
-    <div>
-      <h2> Welcome agent {{route.params.inventoryId}} </h2>
-    </div>
+    
 
     <div class="Inventory">
       <div v-if="loadedData===true">
+        <h1> {{cardInfo[0].itemName}}</h1>
         <div class="row">
-          <div>
-            <div style="background-color: greenyellow"> {{cardInfo}} </div>
-           <div style="background-color: aliceblue"> {{craftingInfo}} </div>
-            <div style="background-color: plum"> {{laborInfo}} </div>
-            <div style="background-color: royalblue"> {{cardInfo[0].imgSrc}} </div>
+          <div class="col-auto">
             <img :src="cardInfo[0].imgSrc">
-            <button @click="deleteEverything()"> Delete </button>
           </div>
+          <div class="col-auto">
+            <div id="itemDetailsPortion">
+              <h4>ITEM DETAILS</h4>
+              <p><strong>ITEM: </strong> {{cardInfo[0].itemName}}</p>
+              <p><strong>DATE: </strong> {{cardInfo[0].date}}</p>
+              <p><strong>SKU NO: </strong> {{cardInfo[0].skuNo}}</p>
+              <p><strong>JO #: </strong> {{cardInfo[0].joNo}}</p>
+              <p><strong>TYPE: </strong> {{cardInfo[0].itemType}}</p>
+              <p><strong>COLOR: </strong> {{cardInfo[0].itemColor}}</p>
+              <p><strong>MATERIAL: </strong>{{cardInfo[0].itemMaterial}}</p>
+            </div>
+          </div>
+          <div class="col-auto">
+            <h4>ITEM PRICING</h4>
+            <p><strong>QUANTITY: </strong>{{cardInfo[0].quantity}}</p>
+            <p>ACTUAL: {{cardInfo[0].actual}}</p>
+            <p><strong>TOTAL ACTUAL: {{cardInfo[0].totalActual}}</strong></p>
+            <p>REPLACEMENT: {{cardInfo[0].replacement}}</p>
+            <p><strong>TOTAL REPLACEMENT: {{cardInfo[0].totalReplacement}}</strong></p>
+            <p>RETAIL: {{cardInfo[0].retail}}</p>
+            <p><strong>TOTAL RETAIL: {{cardInfo[0].totalRetail}}</strong></p>
+            <p>TAG: {{cardInfo[0].tag}}</p>
+            <p><strong>TOTAL TAG: {{cardInfo[0].totalTag}}</strong></p>
+          </div>
+          <div class="col-auto">
+            <h4>AVAILABILITY</h4>
+            <p><strong>STOCK: </strong> {{cardInfo[0].availability}}</p>
+            <div v-if="cardInfo[0].availability==='Sold'">
+              <p><strong>SOLD TO: </strong> {{cardInfo[0].buyName}}</p>
+              <p><strong>DATE: </strong> {{cardInfo[0].buyDate}}</p>
+              <p><strong>PRICE: </strong> {{cardInfo[0].buyPrice}}</p>
+           </div>
+          </div>
+          <div class="col-auto" id="encodingDetails">
+            <h4>ENCODING DETAILS</h4>
+            <p><strong>PREPARED BY: </strong> {{cardInfo[0].preparedBy}}</p>
+            <p><strong>ENCODED BY: </strong> {{cardInfo[0].encodedBy}}</p>
+          </div>
+        </div>
+        <hr>
+        <div class="container row">
+          CRAFTING
+        </div>
+        <hr>
+        <div class="container row">
+          LABOR
         </div>
       </div>
       <div v-if="loadedData===false"> Data is Loading </div>
@@ -134,3 +173,23 @@ export default {
 
   </main>
 </template>
+
+<style scoped>
+p{
+  margin-bottom: 0px;
+}
+
+#itemDetailsPortion{
+  padding-bottom:20%;
+}
+
+img{
+  width:100%;
+  height: 100%;
+  max-height: 300px;
+}
+
+#encodingDetails{
+}
+
+</style>
