@@ -167,6 +167,8 @@ export default {
         <div class="container row">
           LABOR
         </div>
+        <hr>
+        <button @click="deleteEverything()"> Delete </button>
       </div>
       <div v-if="loadedData===false"> Data is Loading </div>
     </div>
