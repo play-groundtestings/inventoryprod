@@ -76,6 +76,7 @@ export default {
       .delete()
       .eq('inventorylink', filterString)
 
+      if(this.cardInfo[0].imgSrc!=" "){
       this.imgInfo = this.cardInfo[0].imgSrc.split('/').pop()
 
       const { storagedata, storageerror } = await supabase
@@ -83,6 +84,7 @@ export default {
       .from('images')
       .remove(this.imgInfo)
 
+      }
       alert("Inventory Card Deleted.")
       this.$router.push('/')
 

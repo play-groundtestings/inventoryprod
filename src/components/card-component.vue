@@ -114,7 +114,7 @@ export default {
   methods: {
     selectFile(event){
             this.uploadImageFile = event.target.files[0]
-            console.log(this.uploadImageFile)
+            
         },
     followUser() {
       this.followers++
@@ -186,6 +186,7 @@ export default {
     async createCard() {
       var distinguisher = uid()
 
+      if(this.uploadImageFile){
       const imageFile = this.uploadImageFile
       const fileExt = imageFile.name.split('.').pop()
       const generateName = uid()
@@ -195,7 +196,7 @@ export default {
       const { data, error } = await supabase.storage
       .from('images')
       .upload(fileName, imageFile)
-
+      }
 
       const { inventorydata, inventoryerror } = await supabase
         .from('inventory')
@@ -203,7 +204,7 @@ export default {
         { id: distinguisher,
           inventorylink: distinguisher,
           itemName: this.itemName,
-          imgSrc: this.imagePath,
+          imgSrc: this.imagePath ? this.imagePath: " ",
           skuNo: this.skuNo,
           date: this.date,
           joNo: this.joNo,
