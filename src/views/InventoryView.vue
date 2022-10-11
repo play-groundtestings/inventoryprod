@@ -145,18 +145,20 @@ export default {
             <p><strong>TOTAL TAG: {{cardInfo[0].totalTag}}</strong></p>
           </div>
           <div class="col-auto">
-            <h4>AVAILABILITY</h4>
-            <p><strong>STOCK: </strong> {{cardInfo[0].availability}}</p>
+            <h4>SALES HISTORY</h4>
+            <p><strong>AVAILABILITY: </strong> {{cardInfo[0].availability}}</p>
             <div v-if="cardInfo[0].availability==='Sold'">
               <p><strong>SOLD TO: </strong> {{cardInfo[0].buyName}}</p>
               <p><strong>DATE: </strong> {{cardInfo[0].buyDate}}</p>
               <p><strong>PRICE: </strong> {{cardInfo[0].buyPrice}}</p>
            </div>
           </div>
-          <div class="col-auto" id="encodingDetails">
-            <h4>ENCODING DETAILS</h4>
-            <p><strong>PREPARED BY: </strong> {{cardInfo[0].preparedBy}}</p>
+          <div class="col-auto d-flex flex-column-reverse" id="encodingDetails">
+ 
+
             <p><strong>ENCODED BY: </strong> {{cardInfo[0].encodedBy}}</p>
+            <p><strong>PREPARED BY: </strong> {{cardInfo[0].preparedBy}}</p>
+            <p><strong>ENCODING DETAILS</strong></p>
           </div>
         </div>
         <hr>
@@ -192,6 +194,7 @@ img{
 }
 
 #encodingDetails{
+  font-size: 80%;
 }
 
 </style>

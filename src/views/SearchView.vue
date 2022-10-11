@@ -10,10 +10,10 @@ export default {
       loadedData: false,
       searchParameter: "",
       availability: "All",
-      identifier: null
-
-
-
+      identifier: null,
+      typeSearch: "",
+      colorSearch: "",
+      materialSearch: ""
     }
   },
   computed: {
@@ -81,6 +81,12 @@ export default {
       }
 
       if(this.identifier === 'Property'){
+
+        if(this.typeSearch){ query = query.eq('itemType', this.typeSearch)}
+        if(this.colorSearch){ query = query.eq('itemColor', this.colorSearch)}
+        if(this.materialSearch){ query = query.eq('itemMaterial', this.materialSearch)}
+      
+
         
       } else if (this.identifier ==='skuNo' || this.identifier === "joNo"){
         query = query.eq(this.identifier, chosenParameter)
@@ -133,16 +139,38 @@ export default {
         <input type="radio" name="joNo" id="joNo" v-model="identifier" value="joNo" />
         JO NO
       </div>
-      <div class="col-1">
+    </div>
+    <div class="row" id="propertyForm">
+      <div class="col-2">
         <input type="radio" name="Property" id="Property" v-model="identifier" value="Property" />
         BY PROPERTY
       </div>
     </div>
+
+    <div v-if="identifier==='Property'">
+      <div class="row" id="propertyPicker">
+        <div class="col-auto">
+          TYPE
+          <input type="text" name="typeSearch" id="typeSearch" v-model="typeSearch">
+        </div>
+        <div class="col-auto">
+          MATERIAL
+          <input type="text" name="materialSearch" id="materialSearch" v-model="materialSearch">
+        </div>
+        <div class="col-auto">
+          COLOR
+          <input type="text" name="colorSearch" id="colorSearch" v-model="colorSearch">
+        </div>
+      </div>
+
+    </div>
     
 
-    <div class="row">
+    <div class="row" id="jumboSearch">
       <h2>
+        <span v-if="identifier!=='Property'">
         <input type="text" name="searchParameter" v-model="searchParameter" id="searchParameter">
+        </span>
         <button type="submit">Search</button>
       </h2>
     </div>
@@ -188,8 +216,24 @@ export default {
 
 #radioForm{
   padding: 0;
+  font-weight: bold;
 
 }
+
+#propertyForm{
+  font-weight: bold;
+}
+
+#propertyPicker{
+  font-weight:bold;
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+
+#jumboSearch{
+  margin-top: 1%;
+}
+
 .card a {
   color: black;
   background-color: white;
@@ -217,5 +261,6 @@ img {
 .col-md-3{
   padding-left: 0px;
 }
+
 
 </style>
