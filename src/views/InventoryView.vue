@@ -268,7 +268,7 @@ export default {
 
         <div class="row d-flex justify-content-between" id="laborSection">
           <div class="col-6">
-            <table class="table-bordered">
+            <table class="table-bordered" id="laborTable">
                   <thead>
                     <tr>
                       <th class="text-center" colspan="7">LABOR</th>
@@ -310,6 +310,15 @@ export default {
                       <td>{{polishInfo[0].actualCost}}</td>
                       <td>{{polishInfo[0].mu}}</td>
                       <td>{{polishInfo[0].sp}}</td>
+                    </tr>
+                    <tr id="lastLaborRow">
+                    <th scope="row"></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td id="totalLaborCost"><strong>TOTAL LABOR COST: {{cardInfo[0].totalLaborActual.toLocaleString()}} </strong></td>
+                    <td id="totalLaborMu"><strong>MU: {{cardInfo[0].totalLaborMu.toLocaleString()}} </strong></td>
+                    <td id="totalLaborSp"><strong>FINAL SP: {{cardInfo[0].totalLaborSp.toLocaleString()}} </strong></td>
                     </tr>
                   </tbody>
               </table>
@@ -364,6 +373,21 @@ img{
 
 #editSpacing{
   margin-right: 1%;
+}
+
+#laborTable #totalLaborCost {
+  border: 2px #505050 solid;
+  font-size: small
+}
+
+#laborTable #totalLaborMu {
+  border: 2px #505050 solid;
+  font-size: small
+}
+
+#laborTable #totalLaborSp {
+  border: 2px #505050 solid;
+  font-size: small
 }
 
 </style>

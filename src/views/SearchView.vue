@@ -69,13 +69,10 @@ export default {
     async conditionalSearch() {
       var chosenParameter = this.searchParameter
       var filterByAvailability = this.availability
-      //  const filterPopHigh = 10000
-      console.log(this.availability)
-      console.log(this.searchParameter)
+
 
       let query = supabase.from('inventory').select('*')
-     // if (filterByName) { query = query.eq('itemColor', filterByName) }
-     //  if (filterPopHigh) { query = query.lt('population', filterPopHigh) } URGENT =======!!!?!?!?!?!??!?!?! add item type color material. then ur done
+
       if(filterByAvailability !== 'All'){
         query = query.eq('availability', filterByAvailability)
       }
@@ -96,8 +93,6 @@ export default {
   
       const { data, error } = await query
 
-        console.log(data)
-        console.log("error" + error)
 
       this.searchList = data
       this.loadedData = true
