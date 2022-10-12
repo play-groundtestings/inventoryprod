@@ -112,7 +112,7 @@ export default {
 <template>
   <h1>Search {{availability}}</h1>
 
-  <form @submit.prevent="conditionalSearch">
+  <form @submit.prevent="conditionalSearch" autocomplete="off">
     <div class="row" id="radioForm">
       <div class="col-1">
         <input type="radio" name="All" id="All" v-model="availability" value="All" checked />
