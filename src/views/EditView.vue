@@ -62,7 +62,21 @@ export default {
       polishActualRate: [],
       polishActualCost: [],
       polishMu: [],
-      polishSp: []
+      polishSp: [],
+      editcraftcour: [],
+      editcraftcurrt: [],
+      editcraftrt: [],
+      editcraftwt: [],
+      editcraftsupinvdac: [],
+      editcraftdescription: [],
+      editcraftmatl: [],
+      editcraftpcost: [],
+      editcraftrepcost: [],
+      editcraftsp: [],
+      editcraftnoofpcs: [],
+      editcraftunitcost: [],
+      editcraftmu: [],
+      editcraftid: []
     }
   },
   computed: {
@@ -77,6 +91,27 @@ export default {
         .eq("inventorylink", filterString)
 
       this.craftingInfo = data
+
+      console.log(this.craftingInfo.length)
+      console.log(this.craftingInfo[1])
+
+      for(var i=0; i<this.craftingInfo.length; i++){
+        this.editcraftnoofpcs[i] = this.craftingInfo[i].noOfPcs
+        this.editcraftid[i] = this.craftingInfo[i].id
+        this.editcraftmatl[i] = this.craftingInfo[i].material
+        this.editcraftdescription[i] = this.craftingInfo[i].description
+        this.editcraftsupinvdac[i] = this.craftingInfo[i].supInvDaCo
+        this.editcraftwt[i] = this.craftingInfo[i].wt
+        this.editcraftunitcost[i] = this.craftingInfo[i].unitcost
+        this.editcraftrt[i] = this.craftingInfo[i].rt
+        this.editcraftpcost[i] = this.craftingInfo[i].pCost
+        this.editcraftcurrt[i] = this.craftingInfo[i].curRt
+        this.editcraftrepcost[i] = this.craftingInfo[i].repCost
+        this.editcraftmu[i] = this.craftingInfo[i].mu
+        this.editcraftcour[i] = this.craftingInfo[i].cour
+        this.editcraftsp[i] = this.craftingInfo[i].sp
+      }
+
       this.loadedData = true
 
     },
@@ -301,6 +336,25 @@ export default {
         .eq('occupation','polisher')
 
 
+        for(var i=0; i<this.craftingInfo.length; i++){
+          const { craftingdata, craftingerror } = await supabase.from('crafting').update({ 
+            noOfPcs: this.editcraftnoofpcs[i],
+            material: this.editcraftmatl[i],
+            description: this.editcraftdescription[i],
+            supInvDaCo: this.editcraftsupinvdac[i],
+            wt: this.editcraftwt[i],
+            unitcost: this.editcraftunitcost[i],
+            rt: this.editcraftrt[i],
+            pCost: this.editcraftpcost[i],
+            curRt: this.editcraftcurrt[i],
+            repCost: this.editcraftrepcost[i],
+            mu: this.editcraftmu[i],
+            cour: this.editcraftcour[i],
+            sp: this.editcraftsp[i],
+            }).eq("inventorylink", filterString).eq("id", this.editcraftid[i])
+        }
+
+
       alert("Inventory Card Edited.")
       this.$router.push('/inventory/' + filterString)
     },
@@ -399,25 +453,25 @@ export default {
                       <th scope="col">TOTAL REP. COST (per item)</th>
                       <th scope="col">M.U.</th>
                       <th scope="col">COUR</th>
-                      <th scope="col">S.P.</th>
+                      <th scope="col">S.P.</th> 
                     </tr>
                   </thead>
 
                   <tbody>
-                    <tr v-for="crafting in craftingInfo">
-                      <td> {{crafting.noOfPcs}} </td>
-                      <td> {{crafting.material}}</td>
-                      <td> {{crafting.description}}</td>
-                      <td> {{crafting.supInvDaCo}}</td>
-                      <td> {{crafting.wt}}</td>
-                      <td> {{crafting.unitcost.toLocaleString()}}</td>
-                      <td> {{crafting.rt}}</td>
-                      <td> {{crafting.pCost.toLocaleString()}}</td>
-                      <td> {{crafting.curRt}}</td>
-                      <td> {{crafting.repCost.toLocaleString()}}</td>
-                      <td> {{crafting.mu}}</td>
-                      <td> {{crafting.cour}}</td>
-                      <td> {{crafting.sp.toLocaleString()}}</td>
+                    <tr v-for="(crafting, key, index) in craftingInfo">
+                      <td> <input v-model="editcraftnoofpcs[key]"> </td>
+                      <td> <input v-model="editcraftmatl[key]"></td> 
+                      <td> <input v-model="editcraftdescription[key]"></td>
+                      <td> <input v-model="editcraftsupinvdac[key]"></td>
+                      <td> <input v-model="editcraftwt[key]"></td>
+                      <td> <input v-model="editcraftunitcost[key]"></td>
+                      <td> <input v-model="editcraftrt[key]"></td>
+                      <td> <input v-model="editcraftpcost[key]"></td>
+                      <td> <input v-model="editcraftcurrt[key]"></td>
+                      <td> <input v-model="editcraftrepcost[key]"></td>
+                      <td> <input v-model="editcraftmu[key]"></td>
+                      <td> <input v-model="editcraftcour[key]"></td>
+                      <td> <input v-model="editcraftsp[key]"></td> 
                     </tr>
                     <tr id="lastCraftRow">
                       <td></td>
