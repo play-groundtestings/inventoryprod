@@ -67,7 +67,7 @@ export default {
   },
   computed: {
     totalActual() {
-      return (parseFloat(this.tester) * 2).toFixed(2);
+      return (parseFloat(this.tester) * 2).toFixed(3);
     },
     computeLaborCost() {
 

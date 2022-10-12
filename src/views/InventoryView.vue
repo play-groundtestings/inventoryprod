@@ -12,7 +12,10 @@ export default {
       cardInfo: [],
       craftingInfo: [],
       laborInfo: [],
-      imgInfo: ""
+      imgInfo: "",
+      goldInfo: [],
+      stoneInfo: [],
+      polishInfo: [],
     }
   },
   computed: {
@@ -88,7 +91,45 @@ export default {
       alert("Inventory Card Deleted.")
       this.$router.push('/')
 
-    }
+    },
+    async goldShow() {
+      let filterString = this.route.params.invenId
+
+      const { data, error } = await supabase
+        .from('labor')
+        .select('*')
+        .eq("inventorylink", filterString)
+        .eq('occupation','goldsmith')
+      
+      this.goldInfo = data
+      this.loadedData = true
+    },
+    async stoneShow() {
+      let filterString = this.route.params.invenId
+
+      const { data, error } = await supabase
+        .from('labor')
+        .select('*')
+        .eq("inventorylink", filterString)
+        .eq('occupation','stonesetter')
+      
+      this.stoneInfo = data
+      this.loadedData = true
+    },
+    async polishShow() {
+      let filterString = this.route.params.invenId
+
+      const { data, error } = await supabase
+        .from('labor')
+        .select('*')
+        .eq("inventorylink", filterString)
+        .eq('occupation','polisher')
+      
+      this.polishInfo = data
+      this.loadedData = true
+    },
+    
+    
 
 
 
@@ -101,6 +142,9 @@ export default {
     this.craftingShow()
     this.laborShow()
     this.cardShow()
+    this.goldShow()
+    this.stoneShow()
+    this.polishShow()
 
 
   }
@@ -144,8 +188,8 @@ export default {
             <p>TAG: {{cardInfo[0].tag}}</p>
             <p><strong>TOTAL TAG: {{cardInfo[0].totalTag}}</strong></p>
           </div>
-          <div class="col-auto">
-            <h4>SALES HISTORY</h4>
+          <div class="col-auto" id="availabilityFormatting">
+            <h4> SALES HISTORY  </h4>
             <p><strong>AVAILABILITY: </strong> {{cardInfo[0].availability}}</p>
             <div v-if="cardInfo[0].availability==='Sold'">
               <p><strong>SOLD TO: </strong> {{cardInfo[0].buyName}}</p>
@@ -153,24 +197,134 @@ export default {
               <p><strong>PRICE: </strong> {{cardInfo[0].buyPrice}}</p>
            </div>
           </div>
-          <div class="col-auto d-flex flex-column-reverse" id="encodingDetails">
- 
 
-            <p><strong>ENCODED BY: </strong> {{cardInfo[0].encodedBy}}</p>
-            <p><strong>PREPARED BY: </strong> {{cardInfo[0].preparedBy}}</p>
-            <p><strong>ENCODING DETAILS</strong></p>
-          </div>
+          <div class="col-auto d-flex">
+
+         </div>
         </div>
-        <hr>
+        
+
         <div class="container row">
-          CRAFTING
+          
+          <table class="col table-bordered" id="maintab">
+                  <thead id="craftingMatStyle">
+                    <tr>
+                      <th class="text-center" colspan="13">CRAFTING MATERIALS</th>
+                    </tr>
+                    <tr>
+                      <th scope="col">NO. OF PCS</th>
+                      <th scope="col">MAT'L</th>
+                      <th scope="col">DESCRIPTION</th>
+                      <th scope="col">SUPPLIER/INV.#/DATE/CODE</th>
+                      <th scope="col">WT.</th>
+                      <th scope="col">UNIT COST</th>
+                      <th scope="col">$ RT</th>
+                      <th scope="col">TOTAL P COST (per item)</th>
+                      <th scope="col">CUR. $ RT</th>
+                      <th scope="col">TOTAL REP. COST (per item)</th>
+                      <th scope="col">M.U.</th>
+                      <th scope="col">COUR</th>
+                      <th scope="col">S.P.</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr v-for="crafting in craftingInfo">
+                      <td> {{crafting.noOfPcs}} </td>
+                      <td> {{crafting.material}}</td>
+                      <td> {{crafting.description}}</td>
+                      <td> {{crafting.supInvDaCo}}</td>
+                      <td> {{crafting.wt}}</td>
+                      <td> {{crafting.unitcost}}</td>
+                      <td> {{crafting.rt}}</td>
+                      <td> {{crafting.pCost}}</td>
+                      <td> {{crafting.curRt}}</td>
+                      <td> {{crafting.repCost}}</td>
+                      <td> {{crafting.mu}}</td>
+                      <td> {{crafting.cour}}</td>
+                      <td> {{crafting.sp}}</td>
+                    </tr>
+                    <tr id="lastCraftRow">
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td id="totalPCraft"><strong>TOTAL P COST: {{cardInfo[0].totalCraftP}} </strong></td>
+                      <td></td>
+                      <td id="totalRepCraft"><strong>TOTAL REP COST: {{cardInfo[0].totalCraftRep}}</strong></td>
+                      <td></td>
+                      <td></td>
+                      <td id="totalSpCraft"><strong>FINAL SP: {{cardInfo[0].totalCraftSp}}</strong></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+
+
         </div>
-        <hr>
-        <div class="container row">
-          LABOR
+
+        <div class="row d-flex justify-content-between" id="laborSection">
+          <div class="col-6">
+            <table class="table-bordered">
+                  <thead>
+                    <tr>
+                      <th class="text-center" colspan="7">LABOR</th>
+                    </tr>
+                    <tr>
+                      <th scope="col"> </th>
+                      <th scope="col">NAME</th>
+                      <th scope="col">HRS</th>
+                      <th scope="col">ACTUAL RATE</th>
+                      <th scope="col">ACTUAL COST</th>
+                      <th scope="col">M.U.</th>
+                      <th scope="col">SP</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">Goldsmith</th>
+                      <td>{{goldInfo[0].name}}</td>
+                      <td>{{goldInfo[0].hrs}}</td>
+                      <td>{{goldInfo[0].actualRate}}</td>
+                      <td>{{goldInfo[0].actualCost}}</td>
+                      <td>{{goldInfo[0].mu}}</td>
+                      <td>{{goldInfo[0].sp}}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Stone Setter</th>
+                      <td>{{stoneInfo[0].name}}</td>
+                      <td>{{stoneInfo[0].hrs}}</td>
+                      <td>{{stoneInfo[0].actualRate}}</td>
+                      <td>{{stoneInfo[0].actualCost}}</td>
+                      <td>{{stoneInfo[0].mu}}</td>
+                      <td>{{stoneInfo[0].sp}}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Polisher</th>
+                      <td>{{polishInfo[0].name}}</td>
+                      <td>{{polishInfo[0].hrs}}</td>
+                      <td>{{polishInfo[0].actualRate}}</td>
+                      <td>{{polishInfo[0].actualCost}}</td>
+                      <td>{{polishInfo[0].mu}}</td>
+                      <td>{{polishInfo[0].sp}}</td>
+                    </tr>
+                  </tbody>
+              </table>
         </div>
-        <hr>
-        <button @click="deleteEverything()"> Delete </button>
+        <div class="col-3" id="encodingDetails">
+         <p id="preparedPadding"><strong>PREPARED BY: </strong> {{cardInfo[0].preparedBy}} </p>
+            <p><strong>ENCODED BY: </strong> {{cardInfo[0].encodedBy}} </p>
+            <button @click="deleteEverything()" id="editSpacing"> Edit </button>
+            <button @click="deleteEverything()"> <strong></strong> Delete </button>
+        </div>
+      </div>
+
+
+    
+
       </div>
       <div v-if="loadedData===false"> Data is Loading </div>
     </div>
@@ -183,6 +337,14 @@ p{
   margin-bottom: 0px;
 }
 
+#laborSection{
+  padding-top:1%;
+}
+
+#preparedPadding{
+  padding-right: 2%
+}
+
 #itemDetailsPortion{
   padding-bottom:20%;
 }
@@ -193,8 +355,15 @@ img{
   max-height: 300px;
 }
 
+
+
 #encodingDetails{
   font-size: 80%;
+  padding-top: 5%;
+}
+
+#editSpacing{
+  margin-right: 1%;
 }
 
 </style>
