@@ -15,7 +15,7 @@ export default {
       imgInfo: "",
       goldInfo: [],
       stoneInfo: [],
-      polishInfo: [],
+      polishInfo: []
     }
   },
   computed: {
@@ -179,14 +179,14 @@ export default {
           <div class="col-auto">
             <h4>ITEM PRICING</h4>
             <p><strong>QUANTITY: </strong>{{cardInfo[0].quantity}}</p>
-            <p>ACTUAL: {{cardInfo[0].actual}}</p>
-            <p><strong>TOTAL ACTUAL: {{cardInfo[0].totalActual}}</strong></p>
-            <p>REPLACEMENT: {{cardInfo[0].replacement}}</p>
-            <p><strong>TOTAL REPLACEMENT: {{cardInfo[0].totalReplacement}}</strong></p>
-            <p>RETAIL: {{cardInfo[0].retail}}</p>
-            <p><strong>TOTAL RETAIL: {{cardInfo[0].totalRetail}}</strong></p>
-            <p>TAG: {{cardInfo[0].tag}}</p>
-            <p><strong>TOTAL TAG: {{cardInfo[0].totalTag}}</strong></p>
+            <p>ACTUAL: {{cardInfo[0].actual.toLocaleString()}}</p>
+            <p><strong>TOTAL ACTUAL: {{cardInfo[0].totalActual.toLocaleString()}}</strong></p>
+            <p>REPLACEMENT: {{cardInfo[0].replacement.toLocaleString()}}</p>
+            <p><strong>TOTAL REPLACEMENT: {{cardInfo[0].totalReplacement.toLocaleString()}}</strong></p>
+            <p>RETAIL: {{cardInfo[0].retail.toLocaleString()}}</p>
+            <p><strong>TOTAL RETAIL: {{cardInfo[0].totalRetail.toLocaleString()}}</strong></p>
+            <p>TAG: {{cardInfo[0].tag.toLocaleString()}}</p>
+            <p><strong>TOTAL TAG: {{cardInfo[0].totalTag.toLocaleString()}}</strong></p>
           </div>
           <div class="col-auto" id="availabilityFormatting">
             <h4> SALES HISTORY  </h4>
@@ -194,7 +194,7 @@ export default {
             <div v-if="cardInfo[0].availability==='Sold'">
               <p><strong>SOLD TO: </strong> {{cardInfo[0].buyName}}</p>
               <p><strong>DATE: </strong> {{cardInfo[0].buyDate}}</p>
-              <p><strong>PRICE: </strong> {{cardInfo[0].buyPrice}}</p>
+              <p><strong>PRICE: </strong> {{cardInfo[0].buyPrice.toLocaleString()}}</p>
            </div>
           </div>
 
@@ -235,14 +235,14 @@ export default {
                       <td> {{crafting.description}}</td>
                       <td> {{crafting.supInvDaCo}}</td>
                       <td> {{crafting.wt}}</td>
-                      <td> {{crafting.unitcost}}</td>
+                      <td> {{crafting.unitcost.toLocaleString()}}</td>
                       <td> {{crafting.rt}}</td>
-                      <td> {{crafting.pCost}}</td>
+                      <td> {{crafting.pCost.toLocaleString()}}</td>
                       <td> {{crafting.curRt}}</td>
-                      <td> {{crafting.repCost}}</td>
+                      <td> {{crafting.repCost.toLocaleString()}}</td>
                       <td> {{crafting.mu}}</td>
                       <td> {{crafting.cour}}</td>
-                      <td> {{crafting.sp}}</td>
+                      <td> {{crafting.sp.toLocaleString()}}</td>
                     </tr>
                     <tr id="lastCraftRow">
                       <td></td>
@@ -252,12 +252,12 @@ export default {
                       <td></td>
                       <td></td>
                       <td></td>
-                      <td id="totalPCraft"><strong>TOTAL P COST: {{cardInfo[0].totalCraftP}} </strong></td>
+                      <td id="totalPCraft"><strong>TOTAL P COST: {{cardInfo[0].totalCraftP.toLocaleString()}} </strong></td>
                       <td></td>
-                      <td id="totalRepCraft"><strong>TOTAL REP COST: {{cardInfo[0].totalCraftRep}}</strong></td>
+                      <td id="totalRepCraft"><strong>TOTAL REP COST: {{cardInfo[0].totalCraftRep.toLocaleString()}}</strong></td>
                       <td></td>
                       <td></td>
-                      <td id="totalSpCraft"><strong>FINAL SP: {{cardInfo[0].totalCraftSp}}</strong></td>
+                      <td id="totalSpCraft"><strong>FINAL SP: {{cardInfo[0].totalCraftSp.toLocaleString()}}</strong></td>
                     </tr>
                   </tbody>
                 </table>
