@@ -92,9 +92,6 @@ export default {
 
       this.craftingInfo = data
 
-      console.log(this.craftingInfo.length)
-      console.log(this.craftingInfo[1])
-
       for(var i=0; i<this.craftingInfo.length; i++){
         this.editcraftnoofpcs[i] = this.craftingInfo[i].noOfPcs
         this.editcraftid[i] = this.craftingInfo[i].id

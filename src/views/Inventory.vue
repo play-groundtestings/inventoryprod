@@ -21,8 +21,6 @@ export default {
   async mounted() {
 
    let { data: inventory, error } = await supabase.from('inventory').select('*').order('created_at', {ascending: false})
-   console.log(supabase)
-   console.log(inventory)
    this.inventoryList = inventory
    this.loadedData = true
 
