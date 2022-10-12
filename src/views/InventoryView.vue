@@ -326,8 +326,8 @@ export default {
         <div class="col-3" id="encodingDetails">
          <p id="preparedPadding"><strong>PREPARED BY: </strong> {{cardInfo[0].preparedBy}} </p>
             <p><strong>ENCODED BY: </strong> {{cardInfo[0].encodedBy}} </p>
-            <button @click="deleteEverything()" id="editSpacing"> Edit </button>
-            <button @click="deleteEverything()"> <strong></strong> Delete </button>
+            <button id="editButton"> <a :href="`/inventory/${cardInfo[0].id}/edit`">EDIT</a> </button>
+            <button id="deleteButton" @click="deleteEverything()"> <strong></strong> DELETE </button>
         </div>
       </div>
 
@@ -371,8 +371,21 @@ img{
   padding-top: 5%;
 }
 
-#editSpacing{
-  margin-right: 1%;
+#editButton{
+  margin-top: 4%;
+  margin-right: 10%;
+  font-size:100%;
+  font-weight:bold;
+}
+
+#deleteButton{
+  font-size:100%;
+  font-weight:bold;
+}
+
+
+#editButton:hover{
+  background-color:#808080;
 }
 
 #laborTable #totalLaborCost {
@@ -389,5 +402,14 @@ img{
   border: 2px #505050 solid;
   font-size: small
 }
+
+a{color:black;
+text-decoration:none;}
+
+a:hover{color:black;}
+
+#deleteButton:hover{background-color: #808080;}
+
+
 
 </style>
