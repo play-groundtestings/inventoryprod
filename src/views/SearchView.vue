@@ -13,63 +13,21 @@ export default {
       identifier: null,
       typeSearch: "",
       colorSearch: "",
-      materialSearch: ""
+      materialSearch: "",
+      itemStatus: false,
+      reserved: "",
+      remade: "",
+      borrowed: "",
+      consigned: ""
     }
   },
   computed: {
   },
   methods: {
-    async searchQuery() {
-
-      var chosenParameter = this.searchParameter
-
-      if (this.sold == "All" && this.searchParameter == "") {
-        let { data: inventory, error } = await supabase.from('inventory').select('*')
-        this.searchList = inventory
-        this.loadedData = true
-      } else if (this.sold == "All" && this.searchParameter) {
-        let { data: inventory, error } = await supabase.from('inventory').select('*').textSearch('itemType', this.searchParameter)
-        this.searchList = inventory
-        this.loadedData = true
-      }
-
-      if (this.sold == "In-Stock" && chosenParameter != "") {
-        let { data: inventory, error } = await supabase.from('inventory').select('*').textSearch('availability', this.sold).textSearch('itemType', this.searchParameter)
-        this.searchList = inventory
-        this.loadedData = true
-      } else if (this.sold == "In-Stock" && chosenParameter == "") {
-        let { data: inventory, error } = await supabase.from('inventory').select('*').textSearch('availability', this.sold)
-        this.searchList = inventory
-        this.loadedData = true
-      }
-
-      if (this.sold == "Sold" && chosenParameter != "") {
-        let { data: inventory, error } = await supabase.from('inventory').select('*').textSearch('availability', this.sold).textSearch('itemType', this.searchParameter)
-        this.searchList = inventory
-        this.loadedData = true
-      } else if (this.sold == "Sold" && chosenParameter == "") {
-        let { data: inventory, error } = await supabase.from('inventory').select('*').textSearch('availability', this.sold)
-        this.searchList = inventory
-        this.loadedData = true
-      }
-
-      if (this.sold == "skuNo" && chosenParameter != "") {
-        let { data: inventory, error } = await supabase.from('inventory').select('*').textSearch('skuNo', this.searchParameter)
-        this.searchList = inventory
-        this.loadedData = true
-      }
-      if (this.sold == "joNo" && chosenParameter != "") {
-        let { data: inventory, error } = await supabase.from('inventory').select('*').textSearch('joNo', this.searchParameter)
-        this.searchList = inventory
-        this.loadedData = true
-      }
-
-    },
 
     async conditionalSearch() {
       var chosenParameter = this.searchParameter
       var filterByAvailability = this.availability
-
 
       let query = supabase.from('inventory').select('*')
 
@@ -82,17 +40,26 @@ export default {
         if(this.typeSearch){ query = query.eq('itemType', this.typeSearch)}
         if(this.colorSearch){ query = query.eq('itemColor', this.colorSearch)}
         if(this.materialSearch){ query = query.eq('itemMaterial', this.materialSearch)}
-      
-
-        
+ 
       } else if (this.identifier ==='skuNo' || this.identifier === "joNo"){
         query = query.eq(this.identifier, chosenParameter)
       } else {
 
       }
+
+      if(this.itemStatus===true){
+        if(this.reserved===true){
+        query = query.eq('reserved', this.reserved)}
+        if(this.consigned===true){
+        query = query.eq('consigned', this.consigned)}
+        if(this.borrowed===true){
+        query = query.eq('borrowed', this.borrowed)}
+        if(this.remade===true){
+        query = query.eq('remade', this.remade)}
+      }
+      
   
       const { data, error } = await query
-
 
       this.searchList = data
       this.loadedData = true
@@ -159,6 +126,46 @@ export default {
       </div>
 
     </div>
+
+    <div class="row" id="statusForm">
+      <div class="col-2">
+        <input type="checkbox" id="itemStatus" v-model="itemStatus"> <strong>BY ITEM STATUS</strong>
+      </div>
+    </div>
+
+    <div v-if="itemStatus===true">
+      <div class="row" id="optionsForm">                
+      <div class="col-auto">
+        <input type="checkbox" name="reserved" id="reserved" v-model="reserved"/>
+      </div>
+      <div class="col-auto">
+        <label for="reserved">RESERVED</label>
+      </div>
+
+      <div class="col-auto">
+        <input type="checkbox" name="remade" id="remade" v-model="remade"/>
+      </div>
+      <div class="col-auto">
+        <label for="remade">REMADE</label>
+      </div>
+
+      <div class="col-auto">
+        <input type="checkbox" name="borrowed" id="borrowed" v-model="borrowed"/>
+      </div>
+      <div class="col-auto">
+        <label for="borrowed">BORROWED</label>
+      </div>
+
+      <div class="col-auto">
+        <input type="checkbox" name="consigned" id="consigned" v-model="consigned"/>
+      </div>
+      <div class="col-auto">
+        <label for="remade">CONSIGNED</label>
+      </div>
+      </div>
+
+
+    </div>
     
 
     <div class="row" id="jumboSearch">
@@ -170,6 +177,7 @@ export default {
       </h2>
     </div>
   </form>
+
 
   <div class="Inventory">
     <p v-if="loadedData===true">
@@ -257,5 +265,9 @@ img {
   padding-left: 0px;
 }
 
+
+#optionsForm{
+  margin-top:2px;
+}
 
 </style>

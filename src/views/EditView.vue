@@ -76,7 +76,11 @@ export default {
       editcraftnoofpcs: [],
       editcraftunitcost: [],
       editcraftmu: [],
-      editcraftid: []
+      editcraftid: [],
+      borrowed: [],
+      consigned: [],
+      remade: [],
+      reserved: []
     }
   },
   computed: {
@@ -163,6 +167,10 @@ export default {
       this.totalLaborSp = this.cardInfo[0].totalLaborSp
       this.preparedBy = this.cardInfo[0].preparedBy
       this.encodedBy = this.cardInfo[0].encodedBy
+      this.reserved = this.cardInfo[0].reserved
+      this.consigned = this.cardInfo[0].consigned
+      this.borrowed = this.cardInfo[0].borrowed
+      this.remade = this.cardInfo[0].remade
       this.loadedData = true
 
     },
@@ -288,7 +296,11 @@ export default {
         totalLaborMu: this.totalLaborMu,
         totalLaborSp: this.totalLaborSp,
         preparedBy: this.preparedBy,
-        encodedBy: this.encodedBy
+        encodedBy: this.encodedBy,
+        reserved: this.reserved,
+        consigned: this.consigned,
+        remade: this.remade,
+        borrowed: this.borrowed
       })
       .eq('inventorylink', filterString)
 
@@ -415,13 +427,32 @@ export default {
             <p>TAG: <input v-model="tag"></p>
             <p><strong>TOTAL TAG: <input v-model="totalTag"></strong></p>
           </div>
+
+          <div class="col-auto">
+            <h4> ITEM STATUS</h4>                
+            <p class="col-auto">
+            <input type="checkbox" class="checkbox" name="reserved" id="reserved" v-model="reserved"/>
+            <label for="reserved">RESERVED</label>
+          </p>
+          <p class="col-auto">
+            <input type="checkbox" class="checkbox" name="remade" id="remade" v-model="remade"/>
+            <label for="remade">REMADE</label>
+          </p>
+          <p class="col-auto">
+            <input type="checkbox" class="checkbox" name="borrowed" id="borrowed" v-model="borrowed"/>
+            <label for="borrowed">BORROWED</label>
+          </p>
+          <p class="col-auto">
+            <input type="checkbox" class="checkbox" name="consigned" id="consigned" v-model="consigned"/>
+            <label for="remade">CONSIGNED</label>
+          </p>
+          </div>
           <div class="col-auto" id="availabilityFormatting">
             <h4> SALES HISTORY  </h4>
             <p><strong>AVAILABILITY: </strong> <input v-model="availability"></p>
               <p><strong>SOLD TO: </strong> <input v-model="buyName"></p>
               <p><strong>DATE: </strong> <input v-model="buyDate"></p>
               <p><strong>PRICE: </strong> <input v-model="buyPrice"></p>
-
           </div>
 
           <div class="col-auto d-flex">
@@ -636,6 +667,8 @@ a:hover{color:black;}
 
 #deleteButton:hover{background-color: #808080;}
 
-
+.checkbox{
+  margin-right: 4px;
+}
 
 </style>

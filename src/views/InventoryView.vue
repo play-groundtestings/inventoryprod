@@ -79,7 +79,7 @@ export default {
       .delete()
       .eq('inventorylink', filterString)
 
-      if(this.cardInfo[0].imgSrc!=" "){
+      if(this.cardInfo[0].imgSrc!=null){
       this.imgInfo = this.cardInfo[0].imgSrc.split('/').pop()
 
       const { storagedata, storageerror } = await supabase
@@ -188,6 +188,15 @@ export default {
             <p>TAG: {{cardInfo[0].tag.toLocaleString()}}</p>
             <p><strong>TOTAL TAG: {{cardInfo[0].totalTag.toLocaleString()}}</strong></p>
           </div>
+
+          <div class="col-auto">
+            <h4> ITEM STATUS  </h4>
+            <p><strong>RESERVED: </strong> <span v-if="cardInfo[0].reserved==='true'"> &#10003; </span> <span v-if="cardInfo[0].reserved==='false'"> &#10007; </span></p>
+            <p><strong>REMADE: </strong> <span v-if="cardInfo[0].remade==='true'"> &#10003; </span> <span v-if="cardInfo[0].remade==='false'"> &#10007; </span></p>
+            <p><strong>BORROWED: </strong> <span v-if="cardInfo[0].borrowed==='true'"> &#10003; </span> <span v-if="cardInfo[0].borrowed==='false'"> &#10007; </span></p>
+            <p><strong>CONSIGNED: </strong> <span v-if="cardInfo[0].consigned==='true'"> &#10003; </span> <span v-if="cardInfo[0].consigned==='false'"> &#10007; </span></p>
+          </div>
+
           <div class="col-auto" id="availabilityFormatting">
             <h4> SALES HISTORY  </h4>
             <p><strong>AVAILABILITY: </strong> {{cardInfo[0].availability}}</p>
@@ -197,6 +206,8 @@ export default {
               <p><strong>PRICE: </strong> {{cardInfo[0].buyPrice.toLocaleString()}}</p>
            </div>
           </div>
+
+
 
           <div class="col-auto d-flex">
 

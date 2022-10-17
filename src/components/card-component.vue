@@ -47,7 +47,7 @@ export default {
       polishSp: "",
       polishName: "",
       laborCost: 0,
-      totalMu: "",
+      totalMu: 1,
       craftcour: [],
       craftcurrt: [],
       craftrt: [],
@@ -62,7 +62,11 @@ export default {
       craftunitcost: [],
       craftmu: [],
       uploadImageFile: null,
-      imagePath: ""
+      imagePath: "",
+      reserved: false,
+      remade: false,
+      borrowed: false,
+      consigned: false
     }
   },
   computed: {
@@ -91,16 +95,22 @@ export default {
     computeGoldSmith() {
       if (this.goldRate) {
         this.goldCost = (this.goldHrs * this.goldRate).toFixed(2);
+      } else {
+        this.goldCost = null
       }
     },
     computeStoneSmith() {
       if (this.stoneRate) {
         this.stoneCost = (this.stoneHrs * this.stoneRate).toFixed(2);
+      } else {
+        this.stoneRate = null
       }
     },
     computePolishSmith() {
       if (this.polishRate) {
         this.polishCost = (this.polishHrs * this.polishRate).toFixed(2);
+      } else {
+        this.polishRate = null
       }
     },
     computeFinalLaborSP() {
@@ -180,7 +190,7 @@ export default {
         return parseFloat(sum).toFixed(2);
       }
       else {
-        return "";
+        return 0;
       }
     },
     async createCard() {
@@ -203,22 +213,22 @@ export default {
         .insert([
         { id: distinguisher,
           inventorylink: distinguisher,
-          itemName: this.itemName,
-          imgSrc: this.imagePath ? this.imagePath: " ",
-          skuNo: this.skuNo,
-          date: this.date,
-          joNo: this.joNo,
-          itemType: this.itemType ? this.itemType: " ",
-          itemColor: this.itemColor ? this.itemColor: " ",
-          itemMaterial: this.itemMaterial ? this.itemMaterial: " ",
-          quantity: this.quantity,
-          actual: this.actual,
+          itemName: this.itemName ? this.itemName : null,
+          imgSrc: this.imagePath ? this.imagePath: null,
+          skuNo: this.skuNo ? this.skuNo: null,
+          date: this.date ? this.date: null,
+          joNo: this.joNo ? this.joNo: null,
+          itemType: this.itemType ? this.itemType: null,
+          itemColor: this.itemColor ? this.itemColor: null,
+          itemMaterial: this.itemMaterial ? this.itemMaterial: null,
+          quantity: this.quantity ? this.quantity: 0,
+          actual: this.actual ? this.actual: 0,
           totalActual: this.computeTotals(this.actual),
-          replacement: this.replacement,
+          replacement: this.replacement ? this.replacement: 0,
           totalReplacement: this.computeTotals(this.replacement),
-          retail: this.retail,
+          retail: this.retail ? this.retail: 0,
           totalRetail: this.computeTotals(this.retail),
-          tag: this.tag,
+          tag: this.tag ? this.tag: 0,
           totalTag: this.computeTotals(this.tag),
           totalCraftP: this.computeCraftTot(this.craftpcost),
           totalCraftRep: this.computeCraftTot(this.craftrepcost),
@@ -226,12 +236,16 @@ export default {
           totalLaborActual: this.computeLaborCost,
           totalLaborMu: this.totalMu,
           totalLaborSp: this.computeFinalLaborSP ,
-          preparedBy: this.preparedBy ? this.preparedBy : " ",
-          encodedBy: this.encodedBy ? this.encodedBy : " ",
-          availability: this.sold ? this.sold : " ",
-          buyName: this.buyName ? this.buyName : " ",
-          buyDate: this.buyDate ? this.buyDate : "0001-01-01",
-          buyPrice: this.buyPrice ? this.buyPrice : 1, },
+          preparedBy: this.preparedBy ? this.preparedBy : null,
+          encodedBy: this.encodedBy ? this.encodedBy : null,
+          availability: this.sold ? this.sold : null,
+          buyName: this.buyName ? this.buyName : null,
+          buyDate: this.buyDate ? this.buyDate : null,
+          buyPrice: this.buyPrice ? this.buyPrice : 0,
+          reserved: this.reserved,
+          remade: this.remade,
+          borrowed: this.borrowed,
+          consigned: this.consigned },
           ])
 
           
@@ -240,19 +254,19 @@ export default {
           const { craftingdata, craftingerror } = await supabase.from('crafting').insert([
             { id: uid(),
             inventorylink: distinguisher,
-            noOfPcs: this.craftnoofpcs[i],
-            material: this.craftmatl[i] ? this.craftmatl[i] : " " ,
-            description: this.craftdescription[i],
-            supInvDaCo: this.craftsupinvdac[i] ? this.craftsupinvdac[i] : " ",
-            wt: this.craftwt[i] ? this.craftwt[i] : 1,
-            unitcost: this.craftunitcost[i],
-            rt: this.craftrt[i] ? this.craftrt[i] : 1,
-            pCost: this.craftpcost[i],
-            curRt: this.craftcurrt[i] ? this.craftcurrt[i] : 1,
-            repCost: this.craftrepcost[i],
-            mu: this.craftmu[i],
-            cour: this.craftcour[i] ? this.craftcour[i] : 1,
-            sp: this.craftsp[i],
+            noOfPcs: this.craftnoofpcs[i] ? this.craftnoofpcs[i]: null,
+            material: this.craftmatl[i] ? this.craftmatl[i]: null,
+            description: this.craftdescription[i] ? this.craftdescription[i]: null,
+            supInvDaCo: this.craftsupinvdac[i] ? this.craftsupinvdac[i]: null,
+            wt: this.craftwt[i] ? this.craftwt[i]: null,
+            unitcost: this.craftunitcost[i] ? this.craftunitcost[i]: null,
+            rt: this.craftrt[i] ? this.craftrt[i]: null,
+            pCost: this.craftpcost[i] ? this.craftpcost[i]: null,
+            curRt: this.craftcurrt[i] ? this.craftcurrt[i] : null,
+            repCost: this.craftrepcost[i] ? this.craftrepcost[i]: null,
+            mu: this.craftmu[i] ? this.craftmu[i]: null,
+            cour: this.craftcour[i] ? this.craftcour[i]: null,
+            sp: this.craftsp[i] ? this.craftsp[i]: null,
             },
           ])
         }
@@ -260,36 +274,36 @@ export default {
         const { golddata, golderror } = await supabase.from('labor').insert([
         { id: uid(),
         inventorylink: distinguisher,
-        name: this.goldName,
-        hrs: this.goldHrs,
-        actualRate: this.goldRate,
-        actualCost: this.goldCost,
-        mu: this.goldMu ? this.goldMu : 1,
-        sp: this.goldSp ? this.goldSp : 0,
+        name: this.goldName ? this.goldName: null,
+        hrs: this.goldHrs ? this.goldHrs: null,
+        actualRate: this.goldRate ? this.goldRate: null,
+        actualCost: this.goldCost ? this.goldCost: null,
+        mu: this.goldMu ? this.goldMu : null,
+        sp: this.goldSp ? this.goldSp : null,
         occupation: "goldsmith", },
         ])
 
         const { stonedata, stoneerror } = await supabase.from('labor').insert([
         { id: uid(),
         inventorylink: distinguisher,
-        name: this.stoneName,
-        hrs: this.stoneHrs,
-        actualRate: this.stoneRate,
-        actualCost: this.stoneCost,
-        mu: this.stoneMu ? this.stoneMu : 1,
-        sp: this.stoneSp ? this.stoneSp : 0,
+        name: this.stoneName ? this.stoneName: null,
+        hrs: this.stoneHrs ? this.stoneHrs: null,
+        actualRate: this.stoneRate ? this.stoneRate: null,
+        actualCost: this.stoneCost ? this.stoneCost: null,
+        mu: this.stoneMu ? this.stoneMu : null,
+        sp: this.stoneSp ? this.stoneSp : null,
         occupation: "stonesetter", },
        ])
 
        const { polishdata, polisherror } = await supabase.from('labor').insert([
         { id: uid(),
         inventorylink: distinguisher,
-        name: this.polishName,
-        hrs: this.polishHrs,
-        actualRate: this.polishRate,
-        actualCost: this.polishCost,
-        mu: this.polishMu ? this.polishMu : 1,
-        sp: this.polishSp ? this.polishSp : 0,
+        name: this.polishName ? this.polishName: null,
+        hrs: this.polishHrs ?  this.polishHrs: null,
+        actualRate: this.polishRate ? this.polishRate: null,
+        actualCost: this.polishCost ? this.polishCost: null,
+        mu: this.polishMu ? this.polishMu : null,
+        sp: this.polishSp ? this.polishSp : null,
         occupation: "polisher", },
         ]) 
 
@@ -313,7 +327,6 @@ export default {
 
 
 <template>
-  <div class="greetings"> {{name}}</div>
   <form id="masterForm" @submit.prevent="createCard" autocomplete="off">
     <div class="row">
       <div class="col">
@@ -324,7 +337,7 @@ export default {
               <label for="itemName" class="col-form-label">ITEM</label>
             </div>
             <div class="col-4">
-              <input type="text" id="itemName" v-model="itemName" name="itemName" class="form-control" required>
+              <input type="text" id="itemName" v-model="itemName" name="itemName" class="form-control">
             </div>
             <div class="col-auto">
               <input type="file" @change="selectFile">
@@ -336,19 +349,19 @@ export default {
               <label for="skuNo" class="col-form-label">SKU NO.</label>
             </div>
             <div class="col ">
-              <input type="text" id="skuNo" v-model="skuNo" name="skuNo" class="form-control" required>
+              <input type="text" id="skuNo" v-model="skuNo" name="skuNo" class="form-control">
             </div>
             <div class="col-auto">
               <label for="date" class="col-form-label">DATE</label>
             </div>
             <div class="col">
-              <input type="date" id="date" v-model="date" name="date" class="form-control"  required>
+              <input type="date" id="date" v-model="date" name="date" class="form-control">
             </div>
             <div class="col-auto">
               <label for="joNo" class="col-form-label">JO #</label>
             </div>
             <div class="col">
-              <input type="text" id="joNo" v-model="joNo" name="joNo" class="form-control" required>
+              <input type="text" id="joNo" v-model="joNo" name="joNo" class="form-control">
             </div>
             <div class="col-auto">
               <label for="itemType" class="col-form-label">TYPE</label>
@@ -372,7 +385,7 @@ export default {
               <label for="quantity" class="col-form-label">QUANTITY</label>
             </div>
             <div class="col">
-              <input type="text" id="quantity" v-model.number="quantity" name="quantity" class="form-control" required>
+              <input type="text" id="quantity" v-model.number="quantity" name="quantity" class="form-control">
             </div>
           </div>
 
@@ -381,26 +394,26 @@ export default {
               <label for="actual" class="col-form-label">ACTUAL</label>
             </div>
             <div class="col">
-              <input type="text" v-model.number="actual" id="actual" name="actual" class="form-control" required>
+              <input type="text" v-model.number="actual" id="actual" name="actual" class="form-control">
             </div>
             <div class="col-auto">
               <label for="replacement" class="col-form-label">REPLACEMENT</label>
             </div>
             <div class="col">
               <input type="replacement" v-model.number="replacement" id="replacement" name="replacement"
-                class="form-control" required>
+                class="form-control">
             </div>
             <div class="col-auto">
               <label for="retail" class="col-form-label">RETAIL</label>
             </div>
             <div class="col">
-              <input type="text" id="retail" v-model.number="retail" name="retail" class="form-control" required>
+              <input type="text" id="retail" v-model.number="retail" name="retail" class="form-control">
             </div>
             <div class="col-auto">
               <label for="tag" class="col-form-label">TAG</label>
             </div>
             <div class="col">
-              <input type="text" id="tag" v-model.number="tag" name="tag" class="form-control" required>
+              <input type="text" id="tag" v-model.number="tag" name="tag" class="form-control">
             </div>
           </div>
 
@@ -460,32 +473,32 @@ export default {
                   <tbody>
                     <tr v-for="(tableRows, index) in tableRows" :key="index">
                       <td> <input type="text" class="form-control" :id="`noOfPcs-${index}`"
-                          v-model.number="craftnoofpcs[index]" :name="`noOfPcs-${index}`" required></td>
+                          v-model.number="craftnoofpcs[index]" :name="`noOfPcs-${index}`"></td>
                       <td> <input type="text" class="form-control" v-model="craftmatl[index]" :id="`matl-${index}`"
                           :name="`matl-${index}`"></td>
                       <td> <input type="text" class="form-control" v-model="craftdescription[index]"
-                          :id="`description-${index}`" :name="`description-${index}`" required></td>
+                          :id="`description-${index}`" :name="`description-${index}`"></td>
                       <td> <input type="text" class="form-control" v-model="craftsupinvdac[index]"
                           :id="`supInvDaCo-${index}`" :name="`supInvDaCo-${index}`"></td>
                       <td> <input type="text" class="form-control" v-model="craftwt[index]" :id="`wt-${index}`"
                           :name="`wt-${index}`"></td>
                       <td> <input type="text" class="form-control" :id="`unitCost-${index}`"
                           @input="computeCraftCost(index)" v-model.number="craftunitcost[index]"
-                          :name="`unitCost-${index}`" required></td>
+                          :name="`unitCost-${index}`"></td>
                       <td> <input type="text" class="form-control" v-model="craftrt[index]" :id="`rt-${index}`"
                           :name="`rt-${index}`"></td>
                       <td> <input type="text" class="form-control" :ref="`totalP-${index}`" :id="`totalP-${index}`"
-                          v-model="craftpcost[index]" :name="`totalP-${index}`" required></td>
+                          v-model="craftpcost[index]" :name="`totalP-${index}`"></td>
                       <td> <input type="text" class="form-control" v-model="craftcurrt[index]" :id="`curRt-${index}`"
                           :name="`curRt-${index}`"></td>
                       <td> <input type="text" class="form-control" :id="`totalRep-${index}`"
-                          v-model="craftrepcost[index]" :name="`totalRep-${index}`" required></td>
+                          v-model="craftrepcost[index]" :name="`totalRep-${index}`"></td>
                       <td> <input type="text" class="form-control" :id="`mu-${index}`" @input="computeCraftCost(index)"
-                          :name="`mu-${index}`" v-model.number="craftmu[index]" required></td>
+                          :name="`mu-${index}`" v-model.number="craftmu[index]"></td>
                       <td> <input type="text" class="form-control" v-model="craftcour[index]" :id="`cour-${index}`"
                           :name="`cour-${index}`"></td>
                       <td> <input type="text" class="form-control" :id="`sp-${index}`" v-model="craftsp[index]"
-                          :name="`sp-${index}`" required></td>
+                          :name="`sp-${index}`"></td>
                     </tr>
                     <tr v-if="tableRows.length > 0" id="lastCraftRow">
                       <td></td>
@@ -538,24 +551,24 @@ export default {
                 <tbody>
                   <tr>
                     <th scope="row">Goldsmith</th>
-                    <td><input type="text" v-model="goldName" id="goldName" name="goldName" class="form-control" required></td>
-                    <td><input type="text" v-model.number="goldHrs" id="goldHrs" name="goldHrs" class="form-control" required>
+                    <td><input type="text" v-model="goldName" id="goldName" name="goldName" class="form-control"></td>
+                    <td><input type="text" v-model.number="goldHrs" id="goldHrs" name="goldHrs" class="form-control">
                     </td>
                     <td><input type="text" v-model.number="goldRate" @input="computeGoldSmith" id="goldRate"
-                        name="goldRate" class="form-control" required></td>
-                    <td><input type="text" v-model="goldCost" id="goldCost" name="goldCost" class="form-control" required></td>
+                        name="goldRate" class="form-control"></td>
+                    <td><input type="text" v-model="goldCost" id="goldCost" name="goldCost" class="form-control"></td>
                     <td><input type="text" v-model.number="goldMu" id="goldMu" name="goldMu" class="form-control"></td>
                     <td><input type="text" v-model.number="goldSp" id="goldSp" name="goldSp" class="form-control"></td>
                   </tr>
                   <tr>
                     <th scope="row">Stone Setter</th>
-                    <td><input type="text" v-model="stoneName" id="stoneName" name="stoneName" class="form-control" required>
+                    <td><input type="text" v-model="stoneName" id="stoneName" name="stoneName" class="form-control">
                     </td>
-                    <td><input type="text" v-model.number="stoneHrs" id="stoneHrs" name="stoneHrs" class="form-control" required>
+                    <td><input type="text" v-model.number="stoneHrs" id="stoneHrs" name="stoneHrs" class="form-control">
                     </td>
                     <td><input type="text" v-model.number="stoneRate" id="stoneRate" @input="computeStoneSmith"
-                        name="stoneRate" class="form-control" required></td>
-                    <td><input type="text" v-model="stoneCost" id="stoneCost" name="stoneCost" class="form-control" required>
+                        name="stoneRate" class="form-control"></td>
+                    <td><input type="text" v-model="stoneCost" id="stoneCost" name="stoneCost" class="form-control">
                     </td>
                     <td><input type="text" v-model.number="stoneMu" id="stoneMu" name="stoneMu" class="form-control">
                     </td>
@@ -564,13 +577,13 @@ export default {
                   </tr>
                   <tr>
                     <th scope="row">Polisher</th>
-                    <td><input type="text" v-model="polishName" id="polishName" name="polishName" class="form-control" required>
+                    <td><input type="text" v-model="polishName" id="polishName" name="polishName" class="form-control">
                     </td>
                     <td><input type="text" v-model.number="polishHrs" id="polishHrs" name="polishHrs"
-                        class="form-control" required></td>
+                        class="form-control"></td>
                     <td><input type="text" v-model.number="polishRate" @input="computePolishSmith" id="polishRate"
-                        name="polishRate" class="form-control" required></td>
-                    <td><input type="text" v-model="polishCost" id="polishCost" name="polishCost" class="form-control" required>
+                        name="polishRate" class="form-control"></td>
+                    <td><input type="text" v-model="polishCost" id="polishCost" name="polishCost" class="form-control">
                     </td>
                     <td><input type="text" v-model.number="polishMu" id="polishMu" name="polishMu" class="form-control">
                     </td>
@@ -585,7 +598,7 @@ export default {
                     <td></td>
                     <td id="totalLaborCost"><strong>TOTAL LABOR COST: {{computeLaborCost}} </strong></td>
                     <td id="totalLaborMu"><strong>MU: <input type="text" v-model.number="totalMu" id="totalMu"
-                          name="totalMu" class="form-control" required></strong></td>
+                          name="totalMu" class="form-control"></strong></td>
                     <td id="totalLaborSp"><strong>FINAL SP: {{computeFinalLaborSP}} </strong></td>
                   </tr>
                 </tbody>
@@ -609,23 +622,56 @@ export default {
                 </div>
               </div>
 
+              <div class="row" id="optionsForm">                
+
+                <div class="col-auto">
+                  <input type="checkbox" name="reserved" id="reserved" v-model="reserved"/>
+                </div>
+                <div class="col-auto">
+                  <label for="reserved">RESERVED</label>
+                </div>
+
+                <div class="col-auto">
+                  <input type="checkbox" name="remade" id="remade" v-model="remade"/>
+                </div>
+                <div class="col-auto">
+                  <label for="remade">REMADE</label>
+                </div>
+
+                <div class="col-auto">
+                  <input type="checkbox" name="borrowed" id="borrowed" v-model="borrowed"/>
+                </div>
+                <div class="col-auto">
+                  <label for="borrowed">BORROWED</label>
+                </div>
+
+                <div class="col-auto">
+                  <input type="checkbox" name="consigned" id="consigned" v-model="consigned"/>
+                </div>
+                <div class="col-auto">
+                  <label for="remade">CONSIGNED</label>
+                </div>
+              </div>
+
+
               <div class="row" id="radioForm">
 
                 <label>AVAILABILITY: {{sold}} </label>
 
+
                 <div class="col-auto">
-                  <label for="isSold" class="col-form-label">SOLD</label>
-                </div>
-                <div class="col">
-                  <input type="radio" name="availability" id="Sold" v-model="sold" value="Sold" checked />
+                  <input type="radio" name="availability" id="isSold" v-model="sold" value="Sold" checked />
                 </div>
                 <div class="col-auto">
-                  <label for="isStocked" class="col-form-label">IN STOCK</label>
-                </div>
-                <div class="col">
-                  <input type="radio" name="availability" id="Stocked" v-model="sold" value="In-Stock" />
+                  <label for="isSold">SOLD</label>
                 </div>
 
+                <div class="col-auto">
+                  <input type="radio" name="availability" id="isStocked" v-model="sold" value="In-Stock" />
+                </div>
+                <div class="col-auto">
+                  <label for="isStocked">IN STOCK</label>
+                </div>
               </div>
 
               <div v-if="sold==='Sold'">
@@ -765,10 +811,14 @@ label {
 }
 
 #radioForm {
-  margin-top: 1.5%;
   padding-top: 2.5%;
   padding-bottom: 2.5%;
 }
+
+#optionsForm {
+  margin-top: 2%;
+}
+
 
 #firstRegion {
   padding-top: 1%;
