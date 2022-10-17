@@ -1,6 +1,7 @@
 <script>
 import { supabase } from '../supabase'
 import { useRoute } from 'vue-router'
+import { uid } from 'uid'
 
 
 export default {
@@ -80,12 +81,20 @@ export default {
       borrowed: [],
       consigned: [],
       remade: [],
-      reserved: []
+      reserved: [],
+      uploadImageFile: null,
+      imagePath: "",
+      imgSrc: []
     }
   },
   computed: {
   },
   methods: {
+
+    selectFile(event){
+            this.uploadImageFile = event.target.files[0]
+            
+        },
 
     async craftingShow() {
       let filterString = this.route.params.invenId
@@ -171,6 +180,7 @@ export default {
       this.consigned = this.cardInfo[0].consigned
       this.borrowed = this.cardInfo[0].borrowed
       this.remade = this.cardInfo[0].remade
+      this.imgSrc = this.cardInfo[0].imgSrc
       this.loadedData = true
 
     },
@@ -266,10 +276,35 @@ export default {
     async editNow(){
       let filterString = this.route.params.invenId
 
+      if(this.uploadImageFile){
+
+      if(this.imgSrc!=null){
+      this.imgInfo = this.imgSrc.split('/').pop()
+
+      const { storagedata, storageerror } = await supabase
+      .storage
+      .from('images')
+      .remove(this.imgInfo)
+      }
+
+
+      const imageFile = this.uploadImageFile
+      const fileExt = imageFile.name.split('.').pop()
+      const generateName = uid()
+      const fileName = `${generateName}.${fileExt}`
+      this.imagePath = `https://lsckvveawgzilvwkhzbd.supabase.co/storage/v1/object/public/images/${fileName}`
+      this.imgSrc = this.imagePath
+
+      const { data, error } = await supabase.storage
+      .from('images')
+      .upload(fileName, imageFile)
+      }
+
       const { data, error } = await supabase
       .from('inventory')
       .update({
         itemName: this.itemName,
+        imgSrc: this.imgSrc,
         skuNo: this.skuNo,
         date: this.date,
         joNo: this.joNo,
@@ -413,6 +448,7 @@ export default {
               <p><strong>TYPE: </strong> <input v-model="itemType"></p>
               <p><strong>COLOR: </strong> <input v-model="itemColor"></p>
               <p><strong>MATERIAL: </strong><input v-model="itemMaterial"></p>
+              <p><strong>IMAGE: </strong><input type="file" @change="selectFile"></p>
             </div>
           </div>
           <div class="col-auto">
