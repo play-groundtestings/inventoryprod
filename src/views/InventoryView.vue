@@ -161,7 +161,7 @@ export default {
       <div v-if="loadedData===true">
         <h1> {{cardInfo[0].itemName}}</h1>
         <div class="row">
-          <div class="col-auto">
+          <div class="col-auto" v-if="cardInfo[0].imgSrc!=null">
             <img :src="cardInfo[0].imgSrc">
           </div>
           <div class="col-auto">

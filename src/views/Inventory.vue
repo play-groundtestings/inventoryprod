@@ -40,7 +40,7 @@ export default {
       <div class="card col-auto"  v-for="card in inventoryList">
 
         <div class="row no-gutters d-flex align-items-center justify-content-center">
-          <div v-if="card.imgSrc!=' '" class="col-md-4">
+          <div v-if="card.imgSrc!=null" class="col-md-4">
             <img :src="card.imgSrc" class="card-img" alt="...">
           </div>
           <div class="col-md-8">
