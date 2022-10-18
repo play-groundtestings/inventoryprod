@@ -155,7 +155,7 @@ export default {
         this.craftpcost[index] = parseFloat(fixedDecimal).toFixed(2)
       }
       if (this.craftmu[index]) {
-        fixedDecimal = this.craftnoofpcs[index] * this.craftunitcost[index] * this.craftmu[index]
+        fixedDecimal = this.craftrepcost[index] * this.craftmu[index]
         this.craftsp[index] = parseFloat(fixedDecimal).toFixed(2)
       }
     },
