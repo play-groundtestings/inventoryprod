@@ -246,14 +246,18 @@ export default {
                       <td> {{crafting.description}}</td>
                       <td> {{crafting.supInvDaCo}}</td>
                       <td> {{crafting.wt}}</td>
-                      <td> {{crafting.unitcost.toLocaleString()}}</td>
+                      <td v-if="crafting.unitcost != null"> {{crafting.unitcost.toLocaleString()}}</td>
+                      <td v-if="crafting.unitcost === null"></td>
                       <td> {{crafting.rt}}</td>
-                      <td> {{crafting.pCost.toLocaleString()}}</td>
+                      <td v-if="crafting.pCost != null"> {{crafting.pCost.toLocaleString()}}</td>
+                      <td v-if="crafting.pCost === null"></td>
                       <td> {{crafting.curRt}}</td>
-                      <td> {{crafting.repCost.toLocaleString()}}</td>
+                      <td v-if="crafting.repCost != null"> {{crafting.repCost.toLocaleString()}}</td>
+                      <td v-if="crafting.repCost === null"></td>
                       <td> {{crafting.mu}}</td>
                       <td> {{crafting.cour}}</td>
-                      <td> {{crafting.sp.toLocaleString()}}</td>
+                      <td v-if="crafting.sp!= null"> {{crafting.sp.toLocaleString()}}</td>
+                      <td v-if="crafting.sp === null"></td>
                     </tr>
                     <tr id="lastCraftRow">
                       <td></td>
