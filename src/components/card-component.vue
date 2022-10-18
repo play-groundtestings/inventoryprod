@@ -150,9 +150,22 @@ export default {
     },
     computeCraftCost(index) {
       var fixedDecimal = 0;
-      if (!this.craftmu[index]) {
-        fixedDecimal = this.craftnoofpcs[index] * this.craftunitcost[index]
+      if (!this.craftrt[index]) {
+        fixedDecimal = this.craftwt[index] * this.craftunitcost[index]
         this.craftpcost[index] = parseFloat(fixedDecimal).toFixed(2)
+        this.craftrepcost[index] = parseFloat(fixedDecimal).toFixed(2)
+      }
+      if (this.craftrt[index]) {
+        fixedDecimal = this.craftwt[index] * this.craftunitcost[index] * this.craftrt[index]
+        this.craftpcost[index] = parseFloat(fixedDecimal).toFixed(2)
+      }
+      if (this.craftcurrt[index]) {
+        fixedDecimal = this.craftwt[index] * this.craftunitcost[index] * this.craftcurrt[index]
+        this.craftrepcost[index] = parseFloat(fixedDecimal).toFixed(2)
+      }
+      if (!this.craftmu[index]) {
+        fixedDecimal = this.craftrepcost[index]
+        this.craftsp[index] = parseFloat(fixedDecimal).toFixed(2)
       }
       if (this.craftmu[index]) {
         fixedDecimal = this.craftrepcost[index] * this.craftmu[index]
@@ -482,14 +495,14 @@ export default {
                           :id="`supInvDaCo-${index}`" :name="`supInvDaCo-${index}`"></td>
                       <td> <input type="text" class="form-control" v-model="craftwt[index]" :id="`wt-${index}`"
                           :name="`wt-${index}`"></td>
-                      <td> <input type="text" class="form-control" :id="`unitCost-${index}`"
-                          @input="computeCraftCost(index)" v-model.number="craftunitcost[index]"
+                      <td> <input type="text" class="form-control" @input="computeCraftCost(index)" :id="`unitCost-${index}`"
+                           v-model.number="craftunitcost[index]"
                           :name="`unitCost-${index}`"></td>
-                      <td> <input type="text" class="form-control" v-model="craftrt[index]" :id="`rt-${index}`"
+                      <td> <input type="text" class="form-control" @input="computeCraftCost(index)" v-model="craftrt[index]" :id="`rt-${index}`"
                           :name="`rt-${index}`"></td>
                       <td> <input type="text" class="form-control" :ref="`totalP-${index}`" :id="`totalP-${index}`"
                           v-model="craftpcost[index]" :name="`totalP-${index}`"></td>
-                      <td> <input type="text" class="form-control" v-model="craftcurrt[index]" :id="`curRt-${index}`"
+                      <td> <input type="text" class="form-control" v-model="craftcurrt[index]" @input="computeCraftCost(index)" :id="`curRt-${index}`"
                           :name="`curRt-${index}`"></td>
                       <td> <input type="text" class="form-control" :id="`totalRep-${index}`"
                           v-model="craftrepcost[index]" :name="`totalRep-${index}`"></td>
