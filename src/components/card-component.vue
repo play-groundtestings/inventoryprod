@@ -158,6 +158,7 @@ export default {
       if (this.craftrt[index]) {
         fixedDecimal = this.craftwt[index] * this.craftunitcost[index] * this.craftrt[index]
         this.craftpcost[index] = parseFloat(fixedDecimal).toFixed(2)
+        this.craftrepcost[index] = parseFloat(fixedDecimal).toFixed(2)
       }
       if (this.craftcurrt[index]) {
         fixedDecimal = this.craftwt[index] * this.craftunitcost[index] * this.craftcurrt[index]
